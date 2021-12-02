@@ -1,7 +1,3 @@
-"""
-Runs apps on app server (using bootstrap for stylization.
-"""
-
 import dash
 import dash_bootstrap_components as dbc
 

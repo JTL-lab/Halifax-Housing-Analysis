@@ -1,7 +1,3 @@
-"""
-Population analysis of Halifax using census data from 2006, 2011, and 2016 censuses by Statistics Canada.
-"""
-
 import io
 import urllib.request as urllib2
 from urllib.request import urlopen

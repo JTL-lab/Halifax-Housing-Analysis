@@ -1,14 +1,10 @@
-"""
-Organizes app layouts for multi-page Dash app.
-"""
-
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 
 from app import app
-from apps import home, population, gentrification
+from apps import home, population, gentrification, housing, recommendations
 
 # Navigation bar!
 nav = dbc.DropdownMenu(
@@ -16,7 +12,9 @@ nav = dbc.DropdownMenu(
     children=[
         dbc.DropdownMenuItem("Home", href='/home'),
         dbc.DropdownMenuItem("Population Analysis", href='/population'),
-        dbc.DropdownMenuItem("Gentrification Analysis", href='/gentrification')
+        dbc.DropdownMenuItem("Gentrification Analysis", href='/gentrification'),
+        dbc.DropdownMenuItem("Housing Analysis", href='/housing'),
+        dbc.DropdownMenuItem("Recommendations", href='/recommendations')
     ],
     nav=True,
     in_navbar=True,
@@ -29,7 +27,7 @@ navbar = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                        #dbc.Col(html.Img(src='http://makecommunities.com/wp-content/uploads/2015/04/Equal_Housing_Logo.gif', height='50px')),
+                        # dbc.Col(html.Img(src='http://makecommunities.com/wp-content/uploads/2015/04/Equal_Housing_Logo.gif', height='50px')),
                         dbc.Col(dbc.NavbarBrand("HALIFAX HOUSING ANALYSIS", className="ml-2")),
                     ],
                     align='center',
@@ -73,6 +71,7 @@ app.layout = html.Div([
     html.Div(id='page-content')
 ])
 
+
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_selected_page(pathname):
@@ -80,6 +79,10 @@ def display_selected_page(pathname):
         return population.layout
     elif pathname == '/gentrification':
         return gentrification.layout
+    elif pathname == '/housing':
+        return housing.layout
+    elif pathname == '/recommendations':
+        return recommendations.layout
     else:
         return home.layout
 

@@ -1,7 +1,3 @@
-"""
-Dashboard homepage! Should be updated to contain project overview, background, and goals.
-"""
-
 from dash import html
 import dash_bootstrap_components as dbc
 
