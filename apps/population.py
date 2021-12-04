@@ -97,12 +97,12 @@ layout = html.Div([
 
         # Section 3: Population Growth and Shrinkage Without Childbirths
         dbc.Row([
-            dbc.Col(dbc.Card(html.H3(children='Population Change Without Childbirths',
+            dbc.Col(dbc.Card(html.H3(children='Population Change Without Childbirth',
                                      className='text-center text-light bg-dark'), body=True, color="dark")
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for population density choropleth
+        # Dropdown menu for population growth without childbirth choropleth
         html.P("Census Years:"),
         dcc.Dropdown(
             id='no_childbirths_year',

@@ -49,7 +49,7 @@ layout = html.Div([
             style={'width': '50%', 'margin-left': '5px'}
         ),
 
-        dcc.Graph(id="housing_choropleth"),
+        dcc.Graph(id="housing_choropleth", style={'width': '60vh', 'height': '60vh'}),
 
         # Section 2: Rent prices
         dbc.Row([
@@ -71,7 +71,7 @@ layout = html.Div([
             style={'width': '50%', 'margin-left': '5px'}
         ),
 
-        dcc.Graph(id="rent_choropleth"),
+        dcc.Graph(id="rent_choropleth", style={'width': '60vh', 'height': '60vh'}),
     ])
 ])
 
@@ -89,12 +89,13 @@ def display_housing_choropleth(housing_year):
         locations='CTUID',
         featureidkey="properties.CTUID",
         center={"lat": 44.651070, "lon": -63.582687},
-        zoom=10,
+        zoom=10.5,
         opacity=0.4,
         mapbox_style="carto-positron",
     )
 
     return housing_figure
+
 
 # Gets user input from dropdown to choose year for rent visualization
 @app.callback(
@@ -109,7 +110,7 @@ def display_rent_choropleth(rent_year):
         locations='CTUID',
         featureidkey="properties.CTUID",
         center={"lat": 44.651070, "lon": -63.582687},
-        zoom=10,
+        zoom=10.5,
         opacity=0.4,
         mapbox_style="carto-positron",
     )
