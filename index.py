@@ -71,6 +71,9 @@ app.layout = html.Div([
     html.Div(id='page-content')
 ])
 
+def func():
+    return 1
+
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
@@ -88,4 +91,4 @@ def display_selected_page(pathname):
 
 
 if __name__ == "__main__":
-    app.run_server(host='127.0.0.2', debug=True)
+    app.run_server()
