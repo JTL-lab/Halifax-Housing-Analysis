@@ -20,7 +20,28 @@ hfx_census = preprocessing.return_dataframe()
 hfx_json = preprocessing.return_geojson()
 census_cols = list(hfx_census.columns)
 
-# Visualization 1: Interactive population density visualization for 2006, 2011, and 2016 using Dash
+def find_growth_without_childbirth():
+    """
+    Calculates the average growth without childbirth factored in per age demographic in Halifax between census years.
+    This is intended to give an idea of displacement trends.
+    :return:
+    """
+
+    for year in [2006, 2011, 2016]:
+
+        year_before = str(year-5)
+        year = str(year)
+        col_name = 'GrowthWithoutChildbirth' + year_before + '-' + year
+
+        # Subtract the number of births and population since the last census from the current population,
+        # divide it by the total population from the previous census, and multiply by 100 to obtain % growth
+        hfx_census[col_name] = ((hfx_census['Population'+year] - hfx_census['BornSince'+year_before] -
+                                hfx_census['Population'+year_before]) / hfx_census['Population'+year_before]) * 100
+
+
+# Ensure that population growth without childbirth cols are added to dataframe
+find_growth_without_childbirth()
+
 layout = html.Div([
 
     dbc.Container([
@@ -30,7 +51,7 @@ layout = html.Div([
             dbc.Col(html.H6("Visualizing population trends in Halifax during the 2006, 2011, and 2016 census years"))
         ]),
 
-        # Section 1: Population Density
+        # Section 1: Population Density visualization for 2006, 2011, and 2016
         dbc.Row([
             dbc.Col(dbc.Card(html.H3(children='Population Density',
                                      className='text-center text-light bg-dark'), body=True, color="dark")
@@ -64,15 +85,38 @@ layout = html.Div([
         dcc.Dropdown(
             id='pop_change_year',
             options=[
-                {'label': '2001-2006', 'value': 'PopulationChange2001-2006'},
-                {'label': '2006-2011', 'value': 'PopulationChange2006-2011'},
-                {'label': '2011-2016', 'value': 'PopulationChange2011-2016'}
+                {'label': '2001-2006', 'value': 'PopulationDensity2006'},
+                {'label': '2006-2011', 'value': 'PopulationDensity2011'},
+                {'label': '2011-2016', 'value': 'PopulationDensity2016'}
             ],
-            value='PopulationChange2001-2006',
+            value='PopulationDensity2006',
             style={'width': '50%', 'margin-left': '5px'}
         ),
 
-        dcc.Graph(id="pop_change_choropleth")
+        dcc.Graph(id="pop_change_choropleth"),
+
+        # Section 3: Population Growth and Shrinkage Without Childbirths
+        dbc.Row([
+            dbc.Col(dbc.Card(html.H3(children='Population Change Without Childbirths',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
+        ]),
+
+        # Dropdown menu for population density choropleth
+        html.P("Census Years:"),
+        dcc.Dropdown(
+            id='no_childbirths_year',
+            options=[
+                {'label': '2001-2006', 'value': 'GrowthWithoutChildbirth2001-2006'},
+                {'label': '2006-2011', 'value': 'GrowthWithoutChildbirth2006-2011'},
+                {'label': '2011-2016', 'value': 'GrowthWithoutChildbirth2011-2016'}
+            ],
+            value='GrowthWithoutChildbirth2001-2006',
+            style={'width': '50%', 'margin-left': '5px'}
+        ),
+
+        dcc.Graph(id="no_childbirths_choropleth")
+
     ])
 ])
 
@@ -116,3 +160,23 @@ def display_population_change_choropleth(pop_change_year):
     )
 
     return pop_change_figure
+
+# Gets user input from dropdown to choose year for growth without childbirth visualization
+@app.callback(
+    Output("no_childbirths_choropleth", "figure"),
+    [Input("no_childbirths_year", "value")]
+)
+def display_population_change_choropleth(no_childbirths_year):
+    no_childbirths_choropleth = px.choropleth_mapbox(
+        data_frame=hfx_census,
+        geojson=hfx_json,
+        color=no_childbirths_year,
+        locations='CTUID',
+        featureidkey="properties.CTUID",
+        center={"lat": 44.651070, "lon": -63.582687},
+        zoom=10,
+        opacity=0.4,
+        mapbox_style="carto-positron",
+    )
+
+    return no_childbirths_choropleth

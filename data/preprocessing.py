@@ -7,14 +7,6 @@ import pandas as pd
 import geopandas as gpd
 import json
 
-from dash import dcc
-from dash import html
-from dash.dependencies import Input, Output
-import dash_bootstrap_components as dbc
-import plotly.express as px
-
-from app import app
-
 
 # Returns a preprocessed version of the Halifax census data to be used in visualizations
 def return_dataframe():
