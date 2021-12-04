@@ -50,6 +50,28 @@ layout = html.Div([
         ),
 
         dcc.Graph(id="housing_choropleth"),
+
+        # Section 2: Rent prices
+        dbc.Row([
+            dbc.Col(dbc.Card(html.H3(children='Rent prices',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
+        ]),
+
+        # Dropdown menu for housing choropleth
+        html.P("Census Year:"),
+        dcc.Dropdown(
+            id='rent_year',
+            options=[
+                {'label': '2006', 'value': 'RentPrices2006'},
+                {'label': '2011', 'value': 'RentPrices2011'},
+                {'label': '2016', 'value': 'RentPrices2016'}
+            ],
+            value='RentPrices2006',
+            style={'width': '50%', 'margin-left': '5px'}
+        ),
+
+        dcc.Graph(id="rent_choropleth"),
     ])
 ])
 
@@ -73,3 +95,23 @@ def display_housing_choropleth(housing_year):
     )
 
     return housing_figure
+
+# Gets user input from dropdown to choose year for rent visualization
+@app.callback(
+    Output("rent_choropleth", "figure"),
+    [Input("rent_year", "value")]
+)
+def display_rent_choropleth(rent_year):
+    rent_figure = px.choropleth_mapbox(
+        data_frame=hfx_census,
+        geojson=hfx_json,
+        color=rent_year,
+        locations='CTUID',
+        featureidkey="properties.CTUID",
+        center={"lat": 44.651070, "lon": -63.582687},
+        zoom=10,
+        opacity=0.4,
+        mapbox_style="carto-positron",
+    )
+
+    return rent_figure
