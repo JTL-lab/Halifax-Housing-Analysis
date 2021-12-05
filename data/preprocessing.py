@@ -57,7 +57,7 @@ def return_geojson():
         return hfx_json
 
 
-hfx_census = return_dataframe('hfxCensusData2006-2016.csv')
+hfx_census = return_dataframe('data/hfxCensusData2006-2016.csv')
 
 def get_gentrified_tracts():
     """
