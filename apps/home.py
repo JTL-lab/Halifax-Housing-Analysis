@@ -67,11 +67,11 @@ layout = html.Div([
                 html.P("Any data regarding characteristics of residents for tracts was obtained through the Statistics "
                        "Canada National Household Survey (NHS) for the same census years. This included data such as "
                        "age demographics, educational attainment, and counts for the racial and/or ethnic groups that "
-                       "respondents identified with."),
+                       "respondents identified with. It is relevant to note that NHS estimates a 50% response rate for"
+                       "their surveys, meaning it is likely the data reported has limitations in terms of bias."),
                 html.P("The boundaries for the 38 Metro Halifax tracts were taken from the Cartographic "
-                       " Boundary Files available for Census Tracts in 2016. Because the boundary files obtained "
-                       "contained geographical data for all tracts in the census, we filtered out the irrelevant "
-                       "tracts. Additionally, for our choropleth visualizations it was necessary to generate a GeoJSON "
+                       " Boundary Files available for Census Tracts in 2016. For our choropleth visualizations, "
+                       "it was necessary to generate a GeoJSON "
                        "file for the Halifax tracts. This was done by obtaining the 2016 Digital Boundary File for the "
                        "census tracts, using the geographic information system software QGIS to filter for the "
                        "Halifax tracts, and converting the final shapefile obtained to GeoJSON. "),
@@ -80,7 +80,7 @@ layout = html.Div([
                        "minor considerations needed for missing data addressed in the next section."),
             ]),
             dbc.Row([
-                dbc.Col(html.H2("DATA PREPARATION"), className="mb-5 mt-5"),
+                dbc.Col(html.H3('                                                                           ')) #spacing
             ]),
             dbc.Row([
                 dbc.Col(dbc.Card(children=[html.H2(children='SHAPEFILES',
@@ -113,8 +113,22 @@ layout = html.Div([
             ]),
         ]),
         dbc.Row([
-            html.P("Certain tracts had this information suppressed during 2011, so any affected rows lacking information "
-                   "(i.e containing NaN values) were dropped during analysis.")
+                dbc.Col(html.H2("DATA PREPARATION"), className="mb-5 mt-5"),
+            ]),
+        dbc.Row([
+            html.P("Shapefiles were obtained from the Statistics Canada 2016 Census Boundary Files page in ArcGIS ("
+                   ".shp) "
+                   " format. Because the boundary files obtained contained geographical data for all tracts in the "
+                   "census, we filtered out the irrelevant tracts and kept only the 38 Halifax tracts in our "
+                   "dataframes."),
+            html.P("During exploration of archived census data for the past 5 census, it was determined that data only "
+                   "became available at a census tract level beginning in 2006. For this reason, our data was limited"
+                   " to only the 2006, 2011, and 2016 censuses to ensure analysis was consistently applied to tracts. "
+                   "The census data for those years were read into Pandas dataframes using the Comma Separated Values "
+                   "(.csv) files available from Statistics Canada."),
+            html.P("In the National Household Survey data for 2011, certain tracts had some of their data attributes"
+                   " suppressed such as educational attainment information, so any affected rows lacking information "
+                   "(i.e containing NaN values) were dropped during analysis."),
         ])
     ])
-])
+], style={'marginBottom': 100})
