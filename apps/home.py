@@ -41,11 +41,7 @@ layout = html.Div([
                 html.P("3) Visualize average housing costs for each metro Halifax tract in 2006, 2011, and 2016."),
                 html.P("4) Visualize median rental prices for each metro Halifax tract in 2006, 2011, and 2016"),
                 html.P("5) Determine what kinds of housing are prevalent in different metro Halifax tracts."),
-                html.P("5) Visualize which census tracts in metro Halifax have gentrified from 2006 - 2016."),
-                html.P(
-                    "6) Train a machine learning classifier to be able to determine which census tracts will gentrify"
-                    " given historical and up-to-date census data on housing and demographics data for Metro Halifax"
-                    " tracts."),
+                html.P("6) Visualize which census tracts in metro Halifax have gentrified from 2006 - 2016."),
                 html.P(
                     "7) Train a machine learning regressor to be able to determine the average housing cost per tract"
                     " given historical and up-to-date housing data for Metro Halifax tracts."),
