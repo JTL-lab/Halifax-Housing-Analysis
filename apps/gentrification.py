@@ -147,11 +147,11 @@ layout = html.Div([
         dbc.Row([
             dbc.Col([
                 html.P("Observations on gentrified tracts: "),
-                html.P("Tract 2050024, located in the North End, had a population in 2016 that was 22.64% POC."),
-                html.P("Tract 2050021, also in the North End, had a population in 2016 that was 25.07% POC."),
-                html.P("Tract 2050019 had a population in 2016 that was 9.51% POC."),
-                html.P("Tract 2050011 had a population in 2016 that was 20.05% POC."),
-                html.P("Tract 2050010 had a population in 2016 that was 33.7% POC."),
+                html.P("Tract 2050024 (Fairview) had a population in 2016 that was 22.64% POC."),
+                html.P("Tract 2050021 (North End) had a population in 2016 that was 25.07% POC."),
+                html.P("Tract 2050019 (West End) had a population in 2016 that was 9.51% POC."),
+                html.P("Tract 2050011 (Quinpool District) had a population in 2016 that was 20.05% POC."),
+                html.P("Tract 2050010 (North End) had a population in 2016 that was 33.7% POC."),
                 html.P("The tract with the highest percentage of minority population in 2016, Tract 2050009 (37.10%) "
                        " was not gentrified, but in general the tracts observed to have gentrified between 2006 to 2016"
                        " did have a higher-than-average percentage of their population that identified as a visible "
