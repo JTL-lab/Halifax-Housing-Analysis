@@ -7,7 +7,7 @@ layout = html.Div([
         dbc.Row([
             dbc.Row([
                 dbc.Col(
-                    html.H1("Recommendations to improve accessibility to housing in Halifax", className="text-center"),
+                    html.H1("Recommendations to improve Halifax housing accessibility", className="text-center"),
                     className="mb-5 mt-5")
             ])
         ])
