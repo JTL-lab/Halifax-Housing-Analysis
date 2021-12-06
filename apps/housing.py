@@ -12,7 +12,7 @@ from dash import html
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
-import plotly.graph_objs as go
+from pandas_profiling import ProfileReport
 
 from app import app
 from data import preprocessing
@@ -20,7 +20,6 @@ from data import preprocessing
 hfx_census = preprocessing.return_dataframe()
 hfx_json = preprocessing.return_geojson()
 census_cols = list(hfx_census.columns)
-housing_data = preprocessing.return_dwelling_types('data/housingData2006.csv', 'data/housingData2011.csv', 'data/housingData2016.csv')
 
 layout = html.Div([
 
@@ -75,28 +74,17 @@ layout = html.Div([
 
         dcc.Graph(id="rent_choropleth", style={'width': '90vh', 'height': '60vh'}),
 
-        # Section 3: dwelling types
         dbc.Row([
-            dbc.Col(dbc.Card(html.H3(children='Dwelling types',
-                                     className='text-center text-light bg-dark'), body=True, color="dark")
-                    , className='mb-4')
+            dbc.Col(dbc.Card(html.Embed(src=app.get_asset_url('housing_report.html'), style={'height': '90vh'})))
         ]),
 
-        # Dropdown menu for dwelling type bar chart
-        html.P("Dwelling Year:"),
-        dcc.Dropdown(
-            id='dwelling_year',
-            options=[
-                {'label': '2006', 'value': 'sums_2006'},
-                {'label': '2011', 'value': 'sums_2011'},
-                {'label': '2016', 'value': 'sums_2016'}
-            ],
-            value='sums_2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
-        dcc.Graph(id="dwelling_barchart", style={'width': '90vh', 'height': '60vh'}),
-    ])
+    dbc.Row([
+            dbc.Col([
+                html.P("The above shows the exploratory data analysis that was used to better understand the housing "
+                       "trends in Metro Halifax.")
+            ])
+        ]),
+    ]),
 ])
 
 
@@ -140,18 +128,3 @@ def display_rent_choropleth(rent_year):
     )
 
     return rent_figure
-
-# Gets user input from dropdown to choose year for dwelling type visualization
-@app.callback(
-    Output("dwelling_barchart", "figure"),
-    [Input("dwelling_year", "value")]
-)
-def display_dwelling_barchart(dwelling_year):
-    dwelling_barchart = px.bar(
-        housing_data,
-        x='dwellings',
-        y=dwelling_year,
-        labels={"dwellings": "Dwelling types",
-                dwelling_year: "Total"}
-    )
-    return dwelling_barchart
