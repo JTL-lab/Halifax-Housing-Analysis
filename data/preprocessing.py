@@ -252,6 +252,19 @@ def get_gentrified_tracts():
     return gentrified_2011, gentrified_2016
 
 
+def return_dwelling_types(file_path):
+    df = pd.read_csv(file_path)
+    df = df.drop([0, 1])
+    dwellings = []
+    sums = []
+    for i in range(12):
+        dwellings.append(df.columns[i])
+        sums.append(df[df.columns[i]].sum())
+
+    df = pd.DataFrame({'dwellings': dwellings, 'sums': sums})
+    return df
+
+
 if __name__ == "__main__":
     hfx_2011, hfx_2016 = get_gentrified_tracts()
 
