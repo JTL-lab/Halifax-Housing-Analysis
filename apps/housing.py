@@ -12,6 +12,7 @@ from dash import html
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
+import plotly.graph_objs as go
 
 from app import app
 from data import preprocessing
@@ -19,10 +20,7 @@ from data import preprocessing
 hfx_census = preprocessing.return_dataframe()
 hfx_json = preprocessing.return_geojson()
 census_cols = list(hfx_census.columns)
-
-housing_data_2006 = preprocessing.return_dwelling_types('data/housingData2006.csv')
-housing_data_2011 = preprocessing.return_dwelling_types('data/housingData2011.csv')
-housing_data_2016 = preprocessing.return_dwelling_types('data/housingData2016.csv')
+housing_data = preprocessing.return_dwelling_types('data/housingData2006.csv', 'data/housingData2011.csv', 'data/housingData2016.csv')
 
 layout = html.Div([
 
@@ -89,11 +87,11 @@ layout = html.Div([
         dcc.Dropdown(
             id='dwelling_year',
             options=[
-                {'label': '2006', 'value': 'dwelling2006'},
-                {'label': '2011', 'value': 'dwelling2011'},
-                {'label': '2016', 'value': 'dwelling2016'}
+                {'label': '2006', 'value': 'sums_2006'},
+                {'label': '2011', 'value': 'sums_2011'},
+                {'label': '2016', 'value': 'sums_2016'}
             ],
-            value='dwelling2006',
+            value='sums_2006',
             style={'width': '50%', 'margin-left': '5px'}
         ),
 
@@ -143,21 +141,17 @@ def display_rent_choropleth(rent_year):
 
     return rent_figure
 
-
+# Gets user input from dropdown to choose year for dwelling type visualization
 @app.callback(
     Output("dwelling_barchart", "figure"),
     [Input("dwelling_year", "value")]
 )
 def display_dwelling_barchart(dwelling_year):
-    df = housing_data_2006
-    if dwelling_year == 'dwelling2011':
-        df = housing_data_2011
-    elif dwelling_year == 'dwelling2016':
-        df = housing_data_2016
-
-    dwelling_barchart = dcc.Graph(
-        id='dwelling_barchart',
-        figure={'data': [{'x': df.dwellings, 'y': df.sums, 'type': 'bar', 'name': 'Dwelling types'}]}
+    dwelling_barchart = px.bar(
+        housing_data,
+        x='dwellings',
+        y=dwelling_year,
+        labels={"dwellings": "Dwelling types",
+                dwelling_year: "Total"}
     )
-
     return dwelling_barchart

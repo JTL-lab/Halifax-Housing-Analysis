@@ -149,3 +149,31 @@ def find_gentrified_tracts(hfx_census):
     gentrification_df = gpd.GeoDataFrame(census_tracts, geometry='geometry')
 
     return gentrification_df
+
+
+def return_dwelling_types(file_path_2006, file_path_2011, file_path_2016):
+    housing_2006 = pd.read_csv(file_path_2006)
+    housing_2011 = pd.read_csv(file_path_2011)
+    housing_2016 = pd.read_csv(file_path_2016)
+
+    # Dropping index and tid columns
+    df_2006 = housing_2006.drop(['tid'], axis=1)
+    df_2011 = housing_2011.drop(['tid'], axis=1)
+    df_2016 = housing_2016.drop(['tid'], axis=1)
+
+    cols = (list(df_2006.columns))
+
+    dwellings = []
+    sums_2006 = []
+    sums_2011 = []
+    sums_2016 = []
+
+    for i in range(13):
+        dwellings.append(cols[i])
+        sums_2006.append(df_2006[cols[i]].sum())
+        sums_2011.append(df_2011[cols[i]].sum())
+        sums_2016.append(df_2016[cols[i]].sum())
+
+    df = pd.DataFrame({'dwellings': dwellings, 'sums_2006': sums_2006, 'sums_2011': sums_2011, 'sums_2016': sums_2016})
+    df = df.drop([0,1,10,11,12])
+    return df
