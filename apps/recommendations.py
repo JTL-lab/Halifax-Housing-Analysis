@@ -58,7 +58,14 @@ layout = html.Div([
             ),
             dbc.AccordionItem(
                 [
-                    html.P("Rent control "),
+                    html.P("Controlling the prices of rent in Halifax and making sure that they do not increase "
+                           "by a certain percentage each year can lead to greater housing stability in Halifax. "
+                           "As mentioned, it was found that rent prices increased quite drastically over the "
+                           "course of our analysis. By ensuring that rent prices remain stable over a certain "
+                           "period of time, tenants can stay in their units longer which can lead to a greater "
+                           "sense of community and stability [3]. Along with neighbourhood diversity and economic "
+                           "growth, rent control can benefit low income communities by ensuring that affordable "
+                           "housing is readily available for those in the community [3]."),
                 ],
                 title="Recommendation #3: Extend rent control",
             ),
@@ -72,7 +79,8 @@ layout = html.Div([
         dbc.Row([
             html.P('[1] Daniel Parolek. "Missing Middle Housing: Thinking Big and '
                                 'Building Small to Respond to Today\'s Housing Crisis". 2020.'
-                   '[2] https://nlihc.org/explore-issues/why-we-care'),
+                   '[2] National Low Income Housing Coalition. "Why do affordable homes matter?". 2021.'
+                   '[3] Centre for Equality Rights in Accommodation. "A look at rent control policies across Canada". 2021.'),
         ])
     ], className='text-center'),
 
