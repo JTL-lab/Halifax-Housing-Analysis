@@ -76,7 +76,8 @@ layout = html.Div([
                        "census tracts, using the geographic information system software QGIS to filter for the "
                        "Halifax tracts, and converting the final shapefile obtained to GeoJSON. "),
                 html.P("Because all data was obtained from Statistics Canada, a national statistics agency tied to the "
-                       "Canadian federal government, data was for the most part high-quality and clean. There were some "
+                       "Canadian federal government, data was for the most part high-quality and clean. There were "
+                       "some "
                        "minor considerations needed for missing data addressed in the next section."),
             ]),
             dbc.Row([
@@ -86,7 +87,8 @@ layout = html.Div([
                 dbc.Col(dbc.Card(children=[html.H2(children='SHAPEFILES',
                                                    className='text-center'),
                                            dbc.Button("Statistics Canada",
-                                                      href='https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm',
+                                                      href='https://www12.statcan.gc.ca/census-recensement/2011/geo'
+                                                           '/bound-limit/bound-limit-2016-eng.cfm',
                                                       color='primary',
                                                       className='text-center',),
                                            ],
@@ -95,7 +97,8 @@ layout = html.Div([
                 dbc.Col(dbc.Card(children=[html.H2(children='POPULATION DATA',
                                                    className='text-center'),
                                            dbc.Button("Statistics Canada",
-                                                      href='https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/index-eng.cfm',
+                                                      href='https://www12.statcan.gc.ca/census-recensement/2021/dp-pd'
+                                                           '/index-eng.cfm',
                                                       color='primary',
                                                       className='text-center'),
                                            ],
@@ -104,7 +107,8 @@ layout = html.Div([
                 dbc.Col(dbc.Card(children=[html.H2(children='HOUSING DATA',
                                                    className='text-center'),
                                            dbc.Button("NHS Canada",
-                                                      href='https://www12.statcan.gc.ca/census-recensement/index-eng.cfm',
+                                                      href='https://www12.statcan.gc.ca/census-recensement/index-eng'
+                                                           '.cfm',
                                                       color='primary',
                                                       className='text-center'),
                                            ],

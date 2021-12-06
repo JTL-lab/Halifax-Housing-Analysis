@@ -12,10 +12,30 @@ hfx_json = preprocessing.return_geojson()
 census_cols = list(hfx_census.columns)
 
 def find_gentrified_tracts():
+    """
+    Uses the methodology defined by Governing.com found here for identifying gentrified areas:
+    https://www.governing.com/archive/gentrification-report-methodology.html
+
+    An area can be determined to have gentrified given the following criteria:
+
+    1) There is an increase in the tract's educational attainment, measured by the percentage of
+    residents above the age of 25 holding bachelor's degrees, that is in the top third percentile of
+    all tracts within the city.
+
+    2) The tract's median home value increased when adjusted for inflation.
+
+    3) The percentage increase in the tract's inflation-adjusted median home value was in the top
+    third percentile of all tracts within the city.
+
+    :return: gentrification_2016: dataframe of 2016 census data containing column 'gentrified' with binary labels
+                                  showing which tracts gentrified from 2006 - 2016
+    """
 
     return
 
+
 def gentrification_prediction_model():
+
     return
 
 
@@ -28,10 +48,28 @@ layout = html.Div([
                         className="mb-5 mt-5")
             ]),
             dbc.Row([
-                html.P("Gentrification is a process where college-educated, wealthly individuals move into poor or "
-                       "working class communities and cause rising costs of living and/or the community culture to "
-                       "change [1].")
-            ])
+                html.P("Gentrification is a process where college-educated, wealthy individuals move into poor or "
+                       "working class communities. This typically causes the cost of living to rise and can also affect"
+                       " the community's culture in a detrimental way "
+                       "[1]. As a neighborhood becomes more gentrified, more people will typically move into "
+                       "the area because of the economic opportunity available. This drives up housing prices and often"
+                       " results in the displacement of minority groups living in the area who are typically "
+                       "disproportionately affected by these changes [1]. Various news outlets have reported on "
+                       "gentrification in Halifax in the past decade [2, 3]. Areas that have been especially mentioned "
+                       "by the media in conjunction with gentrification include the North End, South End, Spryfield"
+                       ", and Clayton Park [2]."),
+                html.P("For our analysis, first we examine the percentages of minority groups (Black, Indigenous, People"
+                       " of Colour) per each tract. We then apply a methodology to determine which tracts of Metro "
+                       "Halifax meet the criteria for having gentrified from 2006 - 2016. Finally, with this combined "
+                       "information, we can observe whether gentrification in Halifax appears to be affecting "
+                       "neighborhoods with higher minority populations.")
+            ], style={'marginBottom': 50}),
+            dbc.Row([
+                dbc.Col(html.H3('Visualizing minority populations across Halifax from 2006 - 2016')),
+            ]),
+
+
+
         ]),
 
         # Section 1: Black population visualization for 2006, 2011, and 2016
@@ -107,11 +145,18 @@ layout = html.Div([
             ]),
             dbc.Row([
                 html.P("[1] National Geographic Society, “Gentrification,” National Geographic Society, 9 Sep 2019. "
-                       "[Online]. Available: https://www.nationalgeographic.org/encyclopedia/gentrification/.")
+                       "[Online]. Available: https://www.nationalgeographic.org/encyclopedia/gentrification/."),
+                html.P("[2] R. Devet, “Gentrification and income inequality the Halifax Way – An Interview with "
+                       "professor Howard Ramos,” Nova Scotia Advocate, 26 Sep, 2019. [Online]. "
+                       "Available: https://nsadvocate.org/2019/09/23/gentrification-and-income-inequality-the-"
+                       "halifax-way-an-interview-with-professor-howard-ramos/."),
+                html.P("[3] M. Adsett, “Halifax residents say gentrification is forcing them from their homes,” "
+                       "Atlantic, 25-Aug-2015. [Online]. Available: https://atlantic.ctvnews.ca/halifax-residents-say-"
+                       "gentrification-is-forcing-them-from-their-homes-1.2532111."),
             ])
         ])
     ])
-])
+], style={'marginBottom': 100})
 
 
 # Gets user input from dropdown to choose year for black population visualization
