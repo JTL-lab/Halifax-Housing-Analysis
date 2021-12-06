@@ -11,6 +11,9 @@ hfx_census = preprocessing.return_dataframe('data/hfxCensusData2006-2016.csv')
 hfx_json = preprocessing.return_geojson()
 census_cols = list(hfx_census.columns)
 
+def find_gentrified_tracts():
+
+    return
 
 def gentrification_prediction_model():
     return
