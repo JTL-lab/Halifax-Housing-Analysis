@@ -42,15 +42,25 @@ layout = html.Div([
             ),
             dbc.AccordionItem(
                 [
-                    html.P("This is some content for the second recommendation"),
+                    html.P("During our analysis of the housing and rent prices in Halifax, it was found that these "
+                           "values increased quite drastically between 2006 and 2016, particularly in tracts "
+                           "determined to be gentrified. For example, the tract 2050022.00 (the area formerly known "
+                           "as Africville in the North End) saw an average home value increase of over $100,000 "
+                           "between 2006 and 2016. For historically low income neighbourhoods, these increases in"
+                           "home values and rent costs lead to significant displacement of residents that can "
+                           "no longer afford to live in their communities. Housing affordability is central to the "
+                           "health and wellbeing of our citizens. Increasing the amount of affordable housing "
+                           "available in Halifax, specifically in communities that have been gentrified, can reduce "
+                           "poverty rates and bolster economic growth in the city [2]. Ensuring that everyone in "
+                           "Halifax has access to shelter can help keep our communities together."),
                 ],
-                title="Recommendation #2",
+                title="Recommendation #2: Increase quantity of affordable housing",
             ),
             dbc.AccordionItem(
                 [
                     html.P("This is some content for the third recommendation"),
                 ],
-                title="Recommendation #3",
+                title="Recommendation #3: Rent control?",
             ),
         ], style={'marginBottom': 100, 'marginLeft': 500, 'marginRight': 500}),
 
