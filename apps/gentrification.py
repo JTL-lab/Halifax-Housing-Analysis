@@ -11,11 +11,21 @@ import plotly.express as px
 
 hfx_census = preprocessing.return_dataframe()
 hfx_json = preprocessing.return_geojson()
+hfx_gentrification = preprocessing.find_gentrified_tracts(hfx_census)
 census_cols = list(hfx_census.columns)
 
-def gentrification_prediction_model():
-    return
-
+# Figure for gentrification from 2006 to 2016
+gentrification_figure = px.choropleth_mapbox(
+        data_frame=hfx_gentrification,
+        geojson=hfx_json,
+        color='gentrified',
+        locations='CTUID',
+        featureidkey="properties.CTUID",
+        center={"lat": 44.651070, "lon": -63.582687},
+        zoom=11,
+        opacity=0.4,
+        mapbox_style="carto-positron",
+)
 
 # DASHBOARD LAYOUT
 layout = html.Div([
@@ -40,8 +50,8 @@ layout = html.Div([
                        "People "
                        " of Colour) per each tract. We then apply a methodology to determine which tracts of Metro "
                        "Halifax meet the criteria for having gentrified from 2006 - 2016. Finally, with this combined "
-                       "information, we can observe whether gentrification in Halifax appears to be affecting "
-                       "neighborhoods with higher minority populations.")
+                       "information, we can observe which tracts gentrified by 2016 and observe whether gentrification "
+                       "in Halifax appears to be affecting neighborhoods with higher minority populations.")
             ], style={'marginBottom': 50}),
             dbc.Row([
                 dbc.Col(html.H3('Visualizing minority populations across Halifax from 2006 - 2016')),
@@ -116,6 +126,42 @@ layout = html.Div([
         dcc.Graph(id="poc_population_choropleth", style={'width': '90vh', 'height': '60vh'}),
 
         dbc.Row([
+            dbc.Col(html.H3('Identifying which tracts gentrified from 2006 - 2016')),
+        ], style={'marginBottom': 50, 'marginTop': 50}, className='text-center'),
+
+        dbc.Row([
+            dbc.Col([
+                html.P("According to Governing.com [4], an area can be determined to have gentrified if it meets the "
+                       " following criteria: "),
+                html.P("1) There is an increase in the tract's educational attainment, measured by the percentage of "
+                       " residents above the age of 25 holding bachelor's degrees, that is in the top third percentile"
+                       " of all tracts within the city."),
+                html.P("2) The tract's median home value increased when adjusted for inflation."),
+                html.P("3) The percentage increase in the tract's inflation-adjusted median home value was in the top"
+                       " third percentile of all tracts within the city."),
+            ])
+        ]),
+
+        dcc.Graph(figure=gentrification_figure, style={'width': '90vh', 'height': '60vh'}),
+
+        dbc.Row([
+            dbc.Col([
+                html.P("Observations on gentrified tracts: "),
+                html.P("Tract 2050024, located in the North End, had a population in 2016 that was 22.64% POC."),
+                html.P("Tract 2050021, also in the North End, had a population in 2016 that was 25.07% POC."),
+                html.P("Tract 2050019 had a population in 2016 that was 9.51% POC."),
+                html.P("Tract 2050011 had a population in 2016 that was 20.05% POC."),
+                html.P("Tract 2050010 had a population in 2016 that was 33.7% POC."),
+                html.P("The tract with the highest percentage of minority population in 2016, Tract 2050009 (37.10%) "
+                       " was not gentrified, but in general the tracts observed to have gentrified between 2006 to 2016"
+                       " did have a higher-than-average percentage of their population that identified as a visible "
+                       "minority. The only exception to this was Tract 2050019 which did not have a significantly "
+                       "higher "
+                       " percentage of POC residents.")
+            ])
+        ]),
+
+        dbc.Row([
             dbc.Row([
                 dbc.Col(html.H5("REFERENCES"), className="mb-5 mt-5")
 
@@ -128,8 +174,10 @@ layout = html.Div([
                        "Available: https://nsadvocate.org/2019/09/23/gentrification-and-income-inequality-the-"
                        "halifax-way-an-interview-with-professor-howard-ramos/."),
                 html.P("[3] M. Adsett, “Halifax residents say gentrification is forcing them from their homes,” "
-                       "Atlantic, 25-Aug-2015. [Online]. Available: https://atlantic.ctvnews.ca/halifax-residents-say-"
-                       "gentrification-is-forcing-them-from-their-homes-1.2532111."),
+                       "Atlantic, 25 August, 2015. [Online]. Available: https://atlantic.ctvnews.ca/halifax-residents"
+                       "-say-gentrification-is-forcing-them-from-their-homes-1.2532111."),
+                html.P("[4] “Gentrification report methodology,” Governing, 17 April, 2021. [Online]. "
+                       "Available: https://www.governing.com/archive/gentrification-report-methodology.html."),
             ])
         ])
     ])
@@ -198,6 +246,5 @@ def display_density_choropleth(census_year):
 
     return density_figure
 
-
-if __name__ == "__main__":
-    find_gentrified_tracts(hfx_census)
+#if __name__ == "__main__":
+#    find_gentrified_tracts(hfx_census)

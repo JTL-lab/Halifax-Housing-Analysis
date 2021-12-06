@@ -83,9 +83,9 @@ def find_gentrified_tracts(hfx_census):
                                   showing which tracts gentrified from 2006 - 2016
     """
 
-    census_tracts = pd.DataFrame(columns=['tid', 'geometry', 'educ_eligible', 'home_value_increase', 'home_eligible',
+    census_tracts = pd.DataFrame(columns=['CTUID', 'geometry', 'educ_eligible', 'home_value_increase', 'home_eligible',
                                           'gentrified'])
-    census_tracts['tid'] = hfx_census['CTUID']
+    census_tracts['CTUID'] = hfx_census['CTUID']
     census_tracts['geometry'] = hfx_census['geometry']
 
     # Step 1: Determine if tract is eligible for gentrification based on educational attainment increase:
@@ -104,7 +104,7 @@ def find_gentrified_tracts(hfx_census):
     percentile66 = np.percentile(educ_difference, 66)
 
     # 1 c) Compare each tract against the 66th percentile: if it's above it, educ_eligible is True
-    for i in range(len(census_tracts['tid'])):
+    for i in range(len(census_tracts['CTUID'])):
         if educ_difference[i] > percentile66:
             census_tracts['educ_eligible'][i] = True
         else:
@@ -133,231 +133,19 @@ def find_gentrified_tracts(hfx_census):
     percentile66 = np.percentile(home_difference, 66)
 
     # 3 c) If difference was above the 66th percentile, home_eligible is True
-    for i in range(len(census_tracts['tid'])):
+    for i in range(len(census_tracts['CTUID'])):
         if home_difference[i] > percentile66:
             census_tracts['home_eligible'][i] = True
         else:
             census_tracts['home_eligible'][i] = False
 
     # If all of the variables are true, the tract is identified as gentrified
-    for i in range(len(census_tracts['tid'])):
+    for i in range(len(census_tracts['CTUID'])):
         if (census_tracts['educ_eligible'][i] == True) and (census_tracts['home_value_increase'][i] == True) and (census_tracts['home_eligible'][i] == True):
             census_tracts['gentrified'][i] = True
         else:
             census_tracts['gentrified'][i] = False
 
-    return census_tracts
+    gentrification_df = gpd.GeoDataFrame(census_tracts, geometry='geometry')
 
-
-def get_gentrified_tracts():
-    """
-    Uses the methodology defined by Governing.com found here for identifying gentrified areas:
-    https://www.governing.com/archive/gentrification-report-methodology.html
-
-    An area can be determined to have gentrified given the following criteria:
-
-    1) There is an increase in the tract's educational attainment, measured by the percentage of
-    residents above the age of 25 holding bachelor's degrees, that is in the top third percentile of
-    all tracts within the city.
-
-    2) The tract's median home value increased when adjusted for inflation.
-
-    3) The percentage increase in the tract's inflation-adjusted median home value was in the top
-    third percentile of all tracts within the city.
-
-    :return: gentrification_2011: dataframe of 2011 census data containing column 'gentrified' with binary labels
-             gentrification_2016: dataframe of 2006 census data containing column 'gentrified' with binary labels
-    """
-
-    # Get census data for 2006, 2011, and 2016
-    census_2006_path = 'hfxTractData2006.csv'
-    census_2011_path = 'hfxTractData2011.csv'
-    census_2016_path = 'hfxTractData2016.csv'
-
-    hfx_2006 = pd.read_csv(census_2006_path)
-    hfx_2011 = pd.read_csv(census_2011_path)
-    hfx_2016 = pd.read_csv(census_2016_path)
-
-    # Replace NaN values with column mean
-    hfx_2011.fillna(hfx_2011.groupby('tid').transform('mean'))
-
-    # Make gentrification dataframes for each year to keep track of gentrification eligibility for tracts
-    gentrification_2011_df = pd.DataFrame(columns=['tid', 'geometry', 'educ_eligible', 'home_value_increase',
-                                                   'home_eligible', 'gentrified'])
-
-    gentrification_2016_df = pd.DataFrame(columns=['tid', 'geometry', 'educ_eligible', 'home_value_increase',
-                                                   'home_eligible', 'gentrified'])
-
-    educ_eligible_2011 = []
-    home_value_increase_2011 = []
-    home_eligible_2011 = []
-
-    educ_eligible_2016 = []
-    home_value_increase_2016 = []
-    home_eligible_2016 = []
-
-    gentrified_2011 = []
-    gentrified_2016 = []
-
-    gentrification_2011_df['tid'] = hfx_census['CTUID']
-    gentrification_2011_df['geometry'] = hfx_census['geometry']
-
-    gentrification_2016_df['tid'] = hfx_census['CTUID']
-    gentrification_2016_df['geometry'] = hfx_census['geometry']
-
-    # 1) Calculate educational attainment increase
-    education_2006 = hfx_2006['p_educ'].to_numpy()
-    education_2011 = hfx_2011['p_educ'].to_numpy()
-    education_2016 = hfx_2016['p_educ'].to_numpy()
-
-    print("This is the education 2011 array: ")
-    print(education_2011)
-
-    ed_diff_2011 = np.subtract(education_2011, education_2006)
-    ed_diff_2016 = np.subtract(education_2016, education_2011)
-
-    print("ed diff 2011:")
-    print(ed_diff_2011)
-
-    min_2011_index = ed_diff_2011.argmin
-    print(min_2011_index)
-    min_ed_2011 = ed_diff_2011[min_2011_index]
-    print("Min ed. in 2011: ")
-    print(min_ed_2011)
-    max_ed_2011 = np.max(ed_diff_2011)
-    print("Max ed. in 2011: ")
-    print(max_ed_2011)
-
-    min_ed_2011 = np.min(ed_diff_2011)
-
-    min_ed_2016 = np.min(ed_diff_2016)
-    max_ed_2016 = np.max(ed_diff_2016)
-
-    percentile_66_2011 = np.percentile(ed_diff_2011, 66)
-    print("66th percentile value: " + str(percentile_66_2011))
-    percentile_66_2016 = np.percentile(ed_diff_2016, 66)
-
-    # Determine which tracts in 2011 and in 2016 saw an increase in educational attainment above the 66th percentile
-    for i in range(len(gentrification_2011_df['tid'])):
-        if ed_diff_2011[i] > percentile_66_2011:
-            gentrification_2011_df['educ_eligible'][i] = True
-            educ_eligible_2011.append(1)
-        else:
-            gentrification_2011_df['educ_eligible'][i] = False
-            educ_eligible_2011.append(0)
-
-    for i in range(len(gentrification_2011_df['tid'])):
-        if ed_diff_2016[i] > percentile_66_2016:
-            gentrification_2016_df['educ_eligible'][i] = True
-            educ_eligible_2016.append(1)
-        else:
-            gentrification_2016_df['educ_eligible'][i] = False
-            educ_eligible_2016.append(0)
-
-    # 2) Calculate increase in home value
-
-    # Obtain inflation rates from https://www.bankofcanada.ca/rates/related/inflation-calculator/
-    #inflation_to_2011 = 1.1083
-    #inflation_to_2016 = 1.0687
-    inflation_to_2011 = 1.000
-    inflation_to_2016 = 1.000
-
-    # Determine if home price increased from 2006 - 2011 and 2011 - 2016 per tract area
-    for i in range(len(hfx_census['CTUID'])):
-        if (hfx_2006['HomeMean'][i] * inflation_to_2011) < hfx_2011['HomeMean'][i]:
-            gentrification_2011_df['home_value_increase'][i] = True
-            home_value_increase_2011.append(1)
-        else:
-            gentrification_2011_df['home_value_increase'][i] = False
-            home_value_increase_2011.append(0)
-
-        if (hfx_2011['HomeMean'][i] * inflation_to_2016) < hfx_2016['HomeMean'][i]:
-            gentrification_2016_df['home_value_increase'][i] = True
-            home_value_increase_2016.append(1)
-        else:
-            gentrification_2016_df['home_value_increase'][i] = False
-            home_value_increase_2016.append(0)
-
-    # Determine if the increase is enough that the tract may have been gentrified
-    home_2006 = hfx_2006['HomeMean'].to_numpy()
-    home_2011 = hfx_2011['HomeMean'].to_numpy()
-    home_2016 = hfx_2016['HomeMean'].to_numpy()
-
-    home_difference_2011 = []
-    home_difference_2016 = []
-
-    for i in range(len(home_2006)):
-
-        home_difference_2011.append(home_2011[i] - (home_2006[i] * inflation_to_2011))
-        home_difference_2016.append(home_2016[i] - (home_2011[i] * inflation_to_2016))
-
-    home_difference_2011 = np.array(home_difference_2011)
-    home_difference_2016 = np.array(home_difference_2016)
-
-    home_2011_percentile_66 = np.percentile(home_difference_2011, 66)
-    print(home_2011_percentile_66)
-    home_2016_percentile_66 = np.percentile(home_difference_2016, 66)
-
-    for i in range(len(hfx_census['CTUID'])):
-        if home_difference_2011[i] > home_2011_percentile_66:
-            gentrification_2011_df['home_eligible'][i] = True
-            home_eligible_2011.append(1)
-        else:
-            gentrification_2011_df['home_eligible'][i] = False
-            home_eligible_2016.append(0)
-
-        if home_difference_2016[i] > home_2016_percentile_66:
-            gentrification_2016_df['home_eligible'][i] = True
-            home_eligible_2016.append(1)
-        else:
-            gentrification_2016_df['home_eligible'][i] = False
-            home_value_increase_2016.append(0)
-
-    for i in range(len(hfx_census['CTUID'])):
-        #if (gentrification_2011_df['educ_eligible'][i] == True) and (gentrification_2011_df['home_value_increase'][i] == True) and (gentrification_2011_df['home_eligible'][i] == True):
-        if educ_eligible_2011[i] == 1 and home_value_increase_2011[i] == 1 and home_eligible_2011[i] == 1:
-            #gentrification_2011_df['gentrified'][i] = 1
-            gentrified_2011.append(1)
-        else:
-            #print(str(gentrification_2011_df['educ_eligible'][i]) + " " + str(gentrification_2011_df['home_value_increase'][i]) + str(gentrification_2011_df['home_eligible'][i]))
-            #gentrification_2011_df['gentrified'][i] = 0
-            gentrified_2011.append(0)
-
-        #if (gentrification_2016_df['educ_eligible'][i] == True) and (gentrification_2016_df['home_value_increase'][i] == True) and (gentrification_2016_df['home_eligible'][i] == True):
-        if educ_eligible_2016[i] == 1 and home_value_increase_2016[i] == 1 and home_eligible_2016[i] == 1:
-            #gentrification_2016_df['gentrified'][i] = 1
-            gentrified_2016.append(1)
-        else:
-            #gentrification_2016_df['gentrified'][i] = 0
-            gentrified_2016.append(0)
-
-    gentrified_2011 = gentrification_2011_df['gentrified'].to_numpy()
-    gentrified_2016 = gentrification_2016_df['gentrified'].to_numpy()
-
-    # Assign target variable of gentrified to the 2011 and 2016 dataframes
-    hfx_2011 = hfx_2011.assign(gentrified=gentrified_2011)
-    hfx_2016 = hfx_2016.assign(gentrified=gentrified_2016)
-
-    #return hfx_2011, hfx_2016
-    return gentrified_2011, gentrified_2016
-
-
-if __name__ == "__main__":
-    hfx_census = return_dataframe()
-    find_gentrified_tracts(hfx_census)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return gentrification_df
