@@ -88,8 +88,6 @@ def get_gentrified_tracts():
     hfx_2011 = pd.read_csv(census_2011_path)
     hfx_2016 = pd.read_csv(census_2016_path)
 
-    print(hfx_2011.head())
-
     # Replace NaN values with column mean
     hfx_2011.fillna(hfx_2011.groupby('tid').transform('mean'))
 
@@ -118,27 +116,32 @@ def get_gentrified_tracts():
     gentrification_2016_df['geometry'] = hfx_census['geometry']
 
     # 1) Calculate educational attainment increase
-    education_2006 = np.array(hfx_2006['p_educ'])
-    education_2011 = np.array(hfx_2011['p_educ'])
-    education_2016 = np.array(hfx_2016['p_educ'])
+    education_2006 = hfx_2006['p_educ'].to_numpy()
+    education_2011 = hfx_2011['p_educ'].to_numpy()
+    education_2016 = hfx_2016['p_educ'].to_numpy()
 
-    ed_diff_2011 = []
-    ed_diff_2016 = []
-    for i in range(len(education_2006)):
-        ed_diff_2011.append(education_2011[i] - education_2006[i])
-        ed_diff_2016.append(education_2016[i] - education_2011[i])
+    print("This is the education 2011 array: ")
+    print(education_2011)
 
-    ed_diff_2011 = np.array(ed_diff_2011)
+    ed_diff_2011 = np.subtract(education_2011, education_2006)
+    ed_diff_2016 = np.subtract(education_2016, education_2011)
+
+    print("ed diff 2011:")
     print(ed_diff_2011)
-    ed_diff_2016 = np.array(ed_diff_2016)
 
-    min_ed_2011 = ed_diff_2011.min()
-    print("Min ed. in 2011: " + str(min_ed_2011))
-    max_ed_2011 = ed_diff_2011.max()
-    print("Max ed. in 2011: " + str(max_ed_2011))
+    min_2011_index = ed_diff_2011.argmin
+    print(min_2011_index)
+    min_ed_2011 = ed_diff_2011[min_2011_index]
+    print("Min ed. in 2011: ")
+    print(min_ed_2011)
+    max_ed_2011 = np.max(ed_diff_2011)
+    print("Max ed. in 2011: ")
+    print(max_ed_2011)
 
-    min_ed_2016 = ed_diff_2016.min()
-    max_ed_2016 = ed_diff_2016.max()
+    min_ed_2011 = np.min(ed_diff_2011)
+
+    min_ed_2016 = np.min(ed_diff_2016)
+    max_ed_2016 = np.max(ed_diff_2016)
 
     percentile_66_2011 = np.percentile(ed_diff_2011, 66)
     print("66th percentile value: " + str(percentile_66_2011))
@@ -186,9 +189,9 @@ def get_gentrified_tracts():
             home_value_increase_2016.append(0)
 
     # Determine if the increase is enough that the tract may have been gentrified
-    home_2006 = np.array(hfx_2006['HomeMean'])
-    home_2011 = np.array(hfx_2011['HomeMean'])
-    home_2016 = np.array(hfx_2016['HomeMean'])
+    home_2006 = hfx_2006['HomeMean'].to_numpy()
+    home_2011 = hfx_2011['HomeMean'].to_numpy()
+    home_2016 = hfx_2016['HomeMean'].to_numpy()
 
     home_difference_2011 = []
     home_difference_2016 = []
@@ -251,10 +254,9 @@ def get_gentrified_tracts():
 
 if __name__ == "__main__":
     hfx_2011, hfx_2016 = get_gentrified_tracts()
-    print(hfx_2011)
-    print(hfx_2016)
-    #print(hfx_2011.head(39))
-    #print(hfx_2016.head(39))
+
+    print(hfx_2011.head(39))
+    print(hfx_2016.head(39))
 
 
 
