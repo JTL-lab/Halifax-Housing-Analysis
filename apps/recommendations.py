@@ -58,9 +58,9 @@ layout = html.Div([
             ),
             dbc.AccordionItem(
                 [
-                    html.P("This is some content for the third recommendation"),
+                    html.P("Rent control "),
                 ],
-                title="Recommendation #3: Rent control?",
+                title="Recommendation #3: Extend rent control",
             ),
         ], style={'marginBottom': 100, 'marginLeft': 500, 'marginRight': 500}),
 
@@ -71,7 +71,8 @@ layout = html.Div([
         ]),
         dbc.Row([
             html.P('[1] Daniel Parolek. "Missing Middle Housing: Thinking Big and '
-                                'Building Small to Respond to Today\'s Housing Crisis". 2020.'),
+                                'Building Small to Respond to Today\'s Housing Crisis". 2020.'
+                   '[2] https://nlihc.org/explore-issues/why-we-care'),
         ])
     ], className='text-center'),
 
