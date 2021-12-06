@@ -64,7 +64,7 @@ layout = html.Div([
                        "Canada National Household Survey (NHS) for the same census years. This included data such as "
                        "age demographics, educational attainment, and counts for the racial and/or ethnic groups that "
                        "respondents identified with. It is relevant to note that NHS estimates a 50% response rate for"
-                       "their surveys, meaning it is likely the data reported has limitations in terms of bias."),
+                       " their surveys, meaning it is likely the data reported has limitations in representing the entire population."),
                 html.P("The boundaries for the 38 Metro Halifax tracts were taken from the Cartographic "
                        " Boundary Files available for Census Tracts in 2016. For our choropleth visualizations, "
                        "it was necessary to generate a GeoJSON "
@@ -121,7 +121,7 @@ layout = html.Div([
                    " format. Because the boundary files obtained contained geographical data for all tracts in the "
                    "census, we filtered out the irrelevant tracts and kept only the 38 Halifax tracts in our "
                    "dataframes."),
-            html.P("During exploration of archived census data for the past 5 census, it was determined that data only "
+            html.P("During exploration of archived census data for the past 5 censuses, we determined that data only "
                    "became available at a census tract level beginning in 2006. For this reason, our data was limited"
                    " to only the 2006, 2011, and 2016 censuses to ensure analysis was consistently applied to tracts. "
                    "The census data for those years were read into Pandas dataframes using the Comma Separated Values "
