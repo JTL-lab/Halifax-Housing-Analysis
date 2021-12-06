@@ -27,7 +27,7 @@ navbar = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                        # dbc.Col(html.Img(src='http://makecommunities.com/wp-content/uploads/2015/04/Equal_Housing_Logo.gif', height='50px')),
+                        dbc.Col(html.Img(src=app.get_asset_url('HFXHousingLogo.png'), height='50px')),
                         dbc.Col(dbc.NavbarBrand("HALIFAX HOUSING ANALYSIS", className="ml-2")),
                     ],
                     align='center',
