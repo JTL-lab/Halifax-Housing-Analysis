@@ -5,37 +5,15 @@ import dash_bootstrap_components as dbc
 
 from app import app
 from data import preprocessing
+import pandas as pd
+import numpy as np
 import plotly.express as px
 
-hfx_census = preprocessing.return_dataframe('data/hfxCensusData2006-2016.csv')
+hfx_census = preprocessing.return_dataframe()
 hfx_json = preprocessing.return_geojson()
 census_cols = list(hfx_census.columns)
 
-def find_gentrified_tracts():
-    """
-    Uses the methodology defined by Governing.com found here for identifying gentrified areas:
-    https://www.governing.com/archive/gentrification-report-methodology.html
-
-    An area can be determined to have gentrified given the following criteria:
-
-    1) There is an increase in the tract's educational attainment, measured by the percentage of
-    residents above the age of 25 holding bachelor's degrees, that is in the top third percentile of
-    all tracts within the city.
-
-    2) The tract's median home value increased when adjusted for inflation.
-
-    3) The percentage increase in the tract's inflation-adjusted median home value was in the top
-    third percentile of all tracts within the city.
-
-    :return: gentrification_2016: dataframe of 2016 census data containing column 'gentrified' with binary labels
-                                  showing which tracts gentrified from 2006 - 2016
-    """
-
-    return
-
-
 def gentrification_prediction_model():
-
     return
 
 
@@ -58,7 +36,8 @@ layout = html.Div([
                        "gentrification in Halifax in the past decade [2, 3]. Areas that have been especially mentioned "
                        "by the media in conjunction with gentrification include the North End, South End, Spryfield"
                        ", and Clayton Park [2]."),
-                html.P("For our analysis, first we examine the percentages of minority groups (Black, Indigenous, People"
+                html.P("For our analysis, first we examine the percentages of minority groups (Black, Indigenous, "
+                       "People "
                        " of Colour) per each tract. We then apply a methodology to determine which tracts of Metro "
                        "Halifax meet the criteria for having gentrified from 2006 - 2016. Finally, with this combined "
                        "information, we can observe whether gentrification in Halifax appears to be affecting "
@@ -66,9 +45,7 @@ layout = html.Div([
             ], style={'marginBottom': 50}),
             dbc.Row([
                 dbc.Col(html.H3('Visualizing minority populations across Halifax from 2006 - 2016')),
-            ]),
-
-
+            ], style={'marginBottom': 50}, className='text-center'),
 
         ]),
 
@@ -179,6 +156,7 @@ def display_density_choropleth(census_year):
 
     return density_figure
 
+
 # Gets user input from dropdown to choose year for indigenous population visualization
 @app.callback(
     Output("indig_population_choropleth", "figure"),
@@ -199,6 +177,7 @@ def display_density_choropleth(census_year):
 
     return density_figure
 
+
 # Gets user input from dropdown to choose year for people of colour population visualization
 @app.callback(
     Output("poc_population_choropleth", "figure"),
@@ -218,3 +197,7 @@ def display_density_choropleth(census_year):
     )
 
     return density_figure
+
+
+if __name__ == "__main__":
+    find_gentrified_tracts(hfx_census)

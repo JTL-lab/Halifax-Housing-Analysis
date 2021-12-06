@@ -16,7 +16,7 @@ import plotly.express as px
 from app import app
 from data import preprocessing
 
-hfx_census = preprocessing.return_dataframe('data/hfxCensusData2006-2016.csv')
+hfx_census = preprocessing.return_dataframe()
 hfx_json = preprocessing.return_geojson()
 census_cols = list(hfx_census.columns)
 
