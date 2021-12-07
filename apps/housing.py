@@ -75,8 +75,14 @@ layout = html.Div([
 
         dcc.Graph(id="rent_choropleth", style={'width': '90vh', 'height': '60vh'}),
 
+        dbc.Row([
+            dbc.Col(dbc.Card(html.H3(children='Dwelling Types',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
+        ]),
+
         # Dropdown menu for dwelling barchart
-        html.P("Dwelling types:"),
+        html.P("Dwelling types by tract:"),
         dcc.Dropdown(
             id='dwelling_year',
             options=[
@@ -89,6 +95,25 @@ layout = html.Div([
         ),
 
         dcc.Graph(id="dwelling_barchart", style={'width': '90vh', 'height': '60vh'}),
+
+        dbc.Row([
+            html.Img(src=app.get_asset_url('correlations_with_average_value.png'), style={'height': '50vh', 'width': '50vh'})
+        ]),
+
+        dbc.Row([
+            dbc.Col([
+                html.P("The above diagram shows the correlation between the type of dwelling and the average dwelling value of a census tract. "
+                       "If the correlation is positive, that means that when there is a high number of dwellings of the specified dwelling type in a tract, "
+                       "the average dwelling value of the tract increases. If the correlation is negative, that means that when there is a high number of the "
+                       "specified dwelling type in a tract, the average dwelling value of the tract decreases. There is a moderate negative correlation between average dwelling value and "
+                       "semi detached homes, row houses, apartments in buildings with less thn five stories, and other dwellings (mobile homes etc.). There is also a "
+                       "weak-moderate negative correlation between the number of dwellings in a tract and the average dwelling value of the tract. "
+                       "Halifax is lacking in many of the dwelling types that have a negative correlation with average value. It is safe to assume "
+                       "that if these dwelling types were greater in number, the negative correlation would be even stronger. "
+                       "This is because a small number of dwellings can not decrease the average dwelling value of an entire tract substantially, "
+                       "although a large number of dwellings can.")
+            ])
+        ]),
 
         dbc.Row([
             dbc.Col(dbc.Card(html.Embed(src=app.get_asset_url('housing_report.html'), style={'height': '90vh'})))
