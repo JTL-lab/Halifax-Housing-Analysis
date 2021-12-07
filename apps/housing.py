@@ -111,7 +111,8 @@ layout = html.Div([
                        "Halifax is lacking in many of the dwelling types that have a negative correlation with average value. It is safe to assume "
                        "that if these dwelling types were greater in number, the negative correlation would be even stronger. "
                        "This is because a small number of dwellings can not decrease the average dwelling value of an entire tract substantially, "
-                       "although a large number of dwellings can.")
+                       "although a large number of dwellings can. There is a strong positive correlation between median household income "
+                       "and average dwelling value. Generally, wealthier people can afford more valuable homes.")
             ])
         ]),
 
