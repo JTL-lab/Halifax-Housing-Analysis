@@ -97,10 +97,6 @@ layout = html.Div([
         dcc.Graph(id="dwelling_barchart", style={'width': '90vh', 'height': '60vh'}),
 
         dbc.Row([
-            html.Img(src=app.get_asset_url('correlations_with_average_value.png'), style={'height': '50vh', 'width': '50vh'})
-        ]),
-
-        dbc.Row([
             dbc.Col([
                 html.P("The above diagram shows the correlation between the type of dwelling and the average dwelling value of a census tract. "
                        "If the correlation is positive, that means that when there is a high number of dwellings of the specified dwelling type in a tract, "
@@ -115,6 +111,13 @@ layout = html.Div([
                        "and average dwelling value. Generally, wealthier people can afford more valuable homes.")
             ])
         ]),
+        
+        dbc.Row([
+
+            dbc.Col(dbc.Card(html.H3(children='Pandas Profiling for Exploratory Data Analysis (EDA)',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
+        ]),
 
         dbc.Row([
             dbc.Col(dbc.Card(html.Embed(src=app.get_asset_url('housing_report.html'), style={'height': '90vh'})))
@@ -126,6 +129,37 @@ layout = html.Div([
                        "trends in Metro Halifax.")
             ])
         ]),
+        
+        dbc.Row([
+            html.Img(src=app.get_asset_url('correlations_with_average_value.png'), style={'height': '50vh', 'width': '50vh'})
+        ]),
+        
+         # Section 4: Housing Price Regressor
+        dbc.Row([
+            dbc.Col(dbc.Card(html.H3(children='Training a regressor for housing price prediction',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
+        ]),
+
+        dbc.Row([
+            html.P("Model Goodness-of-Fit with only training data from 2006 - 2011"),
+            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithOnly2011Data.png'))),
+            html.P("Model Goodness-of-Fit when half of the 2016 data was included in the training data"),
+            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithHalf2016Data.png'))),
+        ], style={'marginBottom': 50}),
+
+        dbc.Row([
+            html.P("To create a regression capable of predicting the average housing cost of a tract based on historical"
+                   " data, we attempted to use an XGBoost Regressor, Random Forest Regressor, and Linear Regression model"
+                   ". The model accuracy was not ideal due to challenges posed by limited training data: because the 2021"
+                   " census will only be released in February 2022, the 2016 average house prices were used as the target "
+                   "variable. This meant that only the 2006 and 2011 data was used in training initially. We instead "
+                   "looked at Goodness-of-Fit (R squared coefficient) for the model performance as "
+                   "we believe this would be a better indicator of how the model would perform if the training data size "
+                   "was not an issue. We also attempted retraining each of the models with an added random 50% of the "
+                   "2016 data, and used the remaining 2016 data as the test set. This improved model performance for "
+                   "most of the models.")
+        ], style={'marginBottom': 50})
     ]),
 ])
 
