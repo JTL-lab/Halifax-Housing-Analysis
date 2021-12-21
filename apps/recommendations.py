@@ -34,6 +34,11 @@ layout = html.Div([
                            "this last factor, middle housing is beneficial for mixed-households which can increase a "
                            "sense of community and togetherness in an area which is helpful for combatting "
                            "gentrification [1]."),
+                    html.P("Zoning regulations determine the types of infrastructure which can be built within certain areas. "
+                           "Zoning regulations are an obstacle because many areas are not zoned for middle housing. Many Halifax "
+                           "neighbourhoods are only zoned for conventional single family homes. So in addition to the construction "
+                           "of more middle housing, zoning regulations must first be changed to allow for the construction to "
+                           "legally take place."),
                     html.Img(src=app.get_asset_url('MiddleHousingFig1.png'), className='text-center'),
                 ],
                 title="Recommendation #1: Increase 'Middle Housing' Options in Halifax",
