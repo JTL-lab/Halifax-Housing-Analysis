@@ -170,10 +170,16 @@ def return_dwelling_types(file_path_2006, file_path_2011, file_path_2016):
 
     for i in range(13):
         dwellings.append(cols[i])
-        sums_2006.append(df_2006[cols[i]].sum())
         sums_2011.append(df_2011[cols[i]].sum())
         sums_2016.append(df_2016[cols[i]].sum())
 
+    # get rid of commas in the census numbers
+    df_2006 = df_2006.replace(',', '', regex=True)
+    # multiply by the number of dwellings for 2006 because the 2006 housing types were represented with percentages
+    for i in range(13):
+        housing_type2006 = int(((pd.to_numeric(df_2006[cols[i]]) / 100) * df_2006[cols[1]]).sum())
+        sums_2006.append(housing_type2006)
+
     df = pd.DataFrame({'dwellings': dwellings, 'sums_2006': sums_2006, 'sums_2011': sums_2011, 'sums_2016': sums_2016})
-    df = df.drop([0,1,10,11,12])
+    df = df.drop([0,1,9,10,11,12])
     return df
