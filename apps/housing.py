@@ -83,7 +83,6 @@ layout = html.Div([
         ]),
 
         # Dropdown menu for dwelling barchart
-        html.P("Dwelling types by tract:"),
         dcc.Dropdown(
             id='dwelling_year',
             options=[
@@ -96,6 +95,12 @@ layout = html.Div([
         ),
 
         dcc.Graph(id="dwelling_barchart", style={'width': '90vh', 'height': '60vh'}),
+
+        dbc.Row([
+            dbc.Col([
+                html.P("The above bar chart shows the number of each type of dwelling in Halifax for each census.")
+            ])
+        ], style={'marginBottom': 50}),
 
         dbc.Row([
             html.Img(src=app.get_asset_url('correlations_with_average_value.png'), style={'height': '50vh', 'width': '50vh'})
@@ -144,7 +149,7 @@ layout = html.Div([
 
         dbc.Row([
             html.P("Model Goodness-of-Fit with only training data from 2006 - 2011"),
-            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithOnly2011Data.png'))),
+            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithOnly2011Data.png'), style={'height': '70vh', 'width': '130vh'})),
             html.P("Model Goodness-of-Fit when half of the 2016 data was included in the training data"),
             dbc.Col(html.Img(src=app.get_asset_url('ModelsWithHalf2016Data.png'))),
         ], style={'marginBottom': 50}),
