@@ -227,13 +227,21 @@ layout = html.Div([
                        "if no children had been born since the last census. If the growth is positive, it means that "
                        "since the last census, the number of people who moved in is greater than the number of people "
                        "who moved away or died. If the the growth is negative, there were more people who died or moved away "
-                       "than people who moved in. We calculated that from 2001-2006, the growth of Metro Halifax without child birth was -3.97%. "
+                       "than people who moved in. We calculated that the growth of Metro Halifax without child birth from 2001-2006 was -3.97%. "
                        "The total growth was 0.999%. From 2006-2011 the growth of Metro Halifax without child birth was -0.094%. The total "
                        "growth was 1.04%. From 2011-2016 the growth of Metro Halifax without child birth was -1.04%. The total growth was 1.03%. "
-                       "Given that Canada has a steadily declining birthrate which is one of among the lowest in the world [1], the current population trends "
-                       "are likely not sustainable for the long term future as Halifax still depends on child birth for this small amount "
-                       "of growth which keeps the population growing.")
+                       "Given that Canada has a steadily declining birthrate which is one of the lowest in the world [1], the current population trends "
+                       "are likely not sustainable for the long term future as Halifax still depends on child birth for a small boost "
+                       "to keep the population growing.")
             ])
+        ]),
+
+        # section 4 population trends of age groups
+
+        dbc.Row([
+            dbc.Col(dbc.Card(html.H3(children='Population Trends of Age Groups',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
         ]),
 
         # Dropdown menu for age group growth bar graph
@@ -253,11 +261,12 @@ layout = html.Div([
         dbc.Row([
             dbc.Col([
                 html.P("The above bar graph shows the percentage growth of each individual age group from one census to the next for all of Metro Halifax. "
-                       "For example, growth is measured by comparing the population of 15-19 year olds in 2006, to the population of 20-24 year olds in 2011. "
-                       "This is the population growth of a specific age demographic ageing five years from one census to the next. "
+                       "For example, growth of the youngest age group is measured by comparing the population of 15-19 year olds in 2006, to the population of 20-24 year olds in 2011. "
+                       "This is the population growth of people born in a specific range of years ageing five years from one census to the next. "
+                       "This measurement of population growth identifies when people are most likely to move to Halifax, and move away. "
                        "As we can see from the graph, the population of 15-19 year olds more than doubles by the time they are in the 20-24 year old age group. "
                        "This is the only age demographic that saw significant growth from 2006-2016. "
-                       "The most obvious explanation for this repeated increase is the fact that Halifax is home to several post-secondary "
+                       "The most obvious explanation for this repeated increase is the fact that Halifax is home to several post-secondary academic "
                        "institutions. The reason behind the lack of growth in every other age demographic is less obvious. "
                        "However, it is clear that more work needs to be done to keep and attract more people outside of the typical post-secondary age group.")
             ])
