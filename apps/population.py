@@ -150,20 +150,16 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for population density choropleth
-        html.P("Census Year:"),
-        dcc.Dropdown(
-            id='density_year',
-            options=[
-                {'label': '2006', 'value': 'PopulationDensity2006'},
-                {'label': '2011', 'value': 'PopulationDensity2011'},
-                {'label': '2016', 'value': 'PopulationDensity2016'}
-            ],
-            value='PopulationDensity2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="density_choropleth"),
+
+        dcc.Slider(
+            id = 'density_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {2006: '2006', 2011: '2011', 2016: '2016'}
+        ),
 
         dbc.Row([
             dbc.Col([
@@ -290,7 +286,16 @@ layout = html.Div([
     Output("density_choropleth", "figure"),
     [Input("density_year", "value")]
 )
+
 def display_density_choropleth(density_year):
+
+    if density_year == 2006:
+        density_year = 'PopulationDensity2006'
+    elif density_year == 2011:
+        density_year = 'PopulationDensity2011'
+    else:
+        density_year = 'PopulationDensity2016'
+
     density_figure = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -301,6 +306,7 @@ def display_density_choropleth(density_year):
         zoom=10,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[0, 10000]
     )
 
     return density_figure
