@@ -158,7 +158,11 @@ layout = html.Div([
             max = 2016,
             step = 5,
             value = 2006,
-            marks = {2006: '2006', 2011: '2011', 2016: '2016'}
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
         ),
 
         dbc.Row([
@@ -174,24 +178,24 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for population change choropleth
-        html.P("Census Years:"),
-        dcc.Dropdown(
-            id='pop_change_year',
-            options=[
-                {'label': '2001-2006', 'value': 'PopulationChange2001-2006'},
-                {'label': '2006-2011', 'value': 'PopulationChange2006-2011'},
-                {'label': '2011-2016', 'value': 'PopulationChange2011-2016'}
-            ],
-            value='PopulationChange2001-2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="pop_change_choropleth"),
+
+        dcc.Slider(
+            id = 'pop_change_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         dbc.Row([
             dbc.Col([
-                html.P("The above visualization shows the population growth from one census to the next as a percentage for each tract.")
+                html.P("The above visualization shows the population growth of each tract since the last census as a percentage.")
             ])
         ]),
 
@@ -317,6 +321,14 @@ def display_density_choropleth(density_year):
     [Input("pop_change_year", "value")]
 )
 def display_population_change_choropleth(pop_change_year):
+
+    if pop_change_year == 2006:
+        pop_change_year = 'PopulationChange2001-2006'
+    elif pop_change_year == 2011:
+        pop_change_year = 'PopulationChange2006-2011'
+    else:
+        pop_change_year = 'PopulationChange2011-2016'
+
     pop_change_figure = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -327,6 +339,7 @@ def display_population_change_choropleth(pop_change_year):
         zoom=10,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[-10, 50]
     )
 
     return pop_change_figure
