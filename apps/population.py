@@ -206,20 +206,21 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for population growth without childbirth choropleth
-        html.P("Census Years:"),
-        dcc.Dropdown(
-            id='no_childbirths_year',
-            options=[
-                {'label': '2001-2006', 'value': 'GrowthWithoutChildbirth2001-2006'},
-                {'label': '2006-2011', 'value': 'GrowthWithoutChildbirth2006-2011'},
-                {'label': '2011-2016', 'value': 'GrowthWithoutChildbirth2011-2016'}
-            ],
-            value='GrowthWithoutChildbirth2001-2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="no_childbirths_choropleth"),
+
+        # Slider menu for population growth without childbirth choropleth
+        dcc.Slider(
+            id = 'no_childbirths_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         dbc.Row([
             dbc.Col([
@@ -244,19 +245,20 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for age group growth bar graph
-        html.P("Census Years:"),
-        dcc.Dropdown(
-            id='age_bar_graph_year',
-            options=[
-                {'label': '2006-2011', 'value': 2006},
-                {'label': '2011-2016', 'value': 2011},
-            ],
-            value=2006,
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="age_bar_graph"),
+
+        # Slider menu for age group growth bar graph
+        dcc.Slider(
+            id = 'age_bar_graph_year',
+            min = 2006,
+            max = 2011,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006-2011', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011-2016', 'style': {'font-size': '150%', 'white-space': 'nowrap'}},
+            },
+        ),
 
         dbc.Row([
             dbc.Col([
@@ -350,6 +352,14 @@ def display_population_change_choropleth(pop_change_year):
     [Input("no_childbirths_year", "value")]
 )
 def display_population_change_choropleth(no_childbirths_year):
+
+    if no_childbirths_year == 2006:
+        no_childbirths_year = 'GrowthWithoutChildbirth2001-2006'
+    elif no_childbirths_year == 2011:
+        no_childbirths_year = 'GrowthWithoutChildbirth2006-2011'
+    else:
+        no_childbirths_year = 'GrowthWithoutChildbirth2011-2016'
+
     no_childbirths_choropleth = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -360,6 +370,7 @@ def display_population_change_choropleth(no_childbirths_year):
         zoom=10,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[-25, 35]
     )
 
     return no_childbirths_choropleth
