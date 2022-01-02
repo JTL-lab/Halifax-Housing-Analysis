@@ -95,6 +95,14 @@ layout = html.Div([
             },
         ),
 
+        html.Br(),
+
+        dbc.Row([
+            dbc.Col([
+                html.P("The above visualization shows the percentage of residents in each tract who identify as black.")
+            ])
+        ]),
+
         # Section 2: Indigenous population visualization for 2006, 2011, and 2016
         dbc.Row([
             dbc.Col(dbc.Card(html.H3(children='INDIGENOUS POPULATION',
@@ -104,7 +112,7 @@ layout = html.Div([
 
         dcc.Graph(id="indig_population_choropleth", style={'width': '90vh', 'height': '60vh'}),
 
-        # Slider for the black population year
+        # Slider for indigenous population year
         dcc.Slider(
             id = 'i_census_year',
             min = 2006,
@@ -117,6 +125,15 @@ layout = html.Div([
                 2016: {'label': '2016', 'style': {'font-size': '150%'}},
             },
         ),
+
+        html.Br(),
+
+        dbc.Row([
+            dbc.Col([
+                html.P(
+                    "The above visualization shows the percentage of residents in each tract who identify as indigenous.")
+            ])
+        ]),
 
         # Section 3: Minority population visualization for 2006, 2011, and 2016
         dbc.Row([
@@ -140,6 +157,16 @@ layout = html.Div([
                 2016: {'label': '2016', 'style': {'font-size': '150%'}},
             },
         ),
+
+        html.Br(),
+
+        dbc.Row([
+            dbc.Col([
+                html.P(
+                    "The above visualization shows the percentage of residents in each tract who identify as a person of colour. "
+                    "In this case, a person of colour is any person who does not identify as caucasian.")
+            ])
+        ]),
 
         dbc.Row([
             dbc.Col(html.H3('Identifying which tracts gentrified from 2006 - 2016')),
