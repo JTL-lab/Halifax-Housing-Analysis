@@ -165,6 +165,8 @@ layout = html.Div([
             },
         ),
 
+        html.Br(),
+
         dbc.Row([
             dbc.Col([
                 html.P("The above visualization shows the population per square kilometre in each tract.")
@@ -192,6 +194,8 @@ layout = html.Div([
                 2016: {'label': '2016', 'style': {'font-size': '150%'}},
             },
         ),
+
+        html.Br(),
 
         dbc.Row([
             dbc.Col([
@@ -221,6 +225,8 @@ layout = html.Div([
                 2016: {'label': '2016', 'style': {'font-size': '150%'}},
             },
         ),
+
+        html.Br(),
 
         dbc.Row([
             dbc.Col([
@@ -259,6 +265,8 @@ layout = html.Div([
                 2011: {'label': '2011-2016', 'style': {'font-size': '150%', 'white-space': 'nowrap'}},
             },
         ),
+
+        html.Br(),
 
         dbc.Row([
             dbc.Col([
