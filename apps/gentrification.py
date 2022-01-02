@@ -14,6 +14,19 @@ hfx_json = preprocessing.return_geojson()
 hfx_gentrification = preprocessing.find_gentrified_tracts(hfx_census)
 census_cols = list(hfx_census.columns)
 
+# update poc percentages so that they're consistent with other pages
+hfx_census['p_black2006'] = hfx_census['p_black2006'] * 100
+hfx_census['p_black2011'] = hfx_census['p_black2011'] * 100
+hfx_census['p_black2016'] = hfx_census['p_black2016'] * 100
+
+hfx_census['p_indig2006'] = hfx_census['p_indig2006'] * 100
+hfx_census['p_indig2011'] = hfx_census['p_indig2011'] * 100
+hfx_census['p_indig2016'] = hfx_census['p_indig2016'] * 100
+
+hfx_census['p_poc2006'] = hfx_census['p_poc2006'] * 100
+hfx_census['p_poc2011'] = hfx_census['p_poc2011'] * 100
+hfx_census['p_poc2016'] = hfx_census['p_poc2016'] * 100
+
 # Figure for gentrification from 2006 to 2016
 gentrification_figure = px.choropleth_mapbox(
         data_frame=hfx_gentrification,
@@ -66,20 +79,21 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for population density choropleth
-        html.P("Census Year:"),
-        dcc.Dropdown(
-            id='b_census_year',
-            options=[
-                {'label': '2006', 'value': 'p_black2006'},
-                {'label': '2011', 'value': 'p_black2011'},
-                {'label': '2016', 'value': 'p_black2016'}
-            ],
-            value='p_black2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="black_population_choropleth", style={'width': '90vh', 'height': '60vh'}),
+
+        # Slider for the black population year
+        dcc.Slider(
+            id = 'b_census_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         # Section 2: Indigenous population visualization for 2006, 2011, and 2016
         dbc.Row([
@@ -88,20 +102,21 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for indigenous population density choropleth
-        html.P("Census Year:"),
-        dcc.Dropdown(
-            id='i_census_year',
-            options=[
-                {'label': '2006', 'value': 'p_indig2006'},
-                {'label': '2011', 'value': 'p_indig2011'},
-                {'label': '2016', 'value': 'p_indig2016'}
-            ],
-            value='p_indig2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="indig_population_choropleth", style={'width': '90vh', 'height': '60vh'}),
+
+        # Slider for the black population year
+        dcc.Slider(
+            id = 'i_census_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         # Section 3: Minority population visualization for 2006, 2011, and 2016
         dbc.Row([
@@ -110,20 +125,21 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for indigenous population density choropleth
-        html.P("Census Year:"),
-        dcc.Dropdown(
-            id='p_census_year',
-            options=[
-                {'label': '2006', 'value': 'p_poc2006'},
-                {'label': '2011', 'value': 'p_poc2011'},
-                {'label': '2016', 'value': 'p_poc2016'}
-            ],
-            value='p_poc2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="poc_population_choropleth", style={'width': '90vh', 'height': '60vh'}),
+
+        # Slider for the black population year
+        dcc.Slider(
+            id = 'p_census_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         dbc.Row([
             dbc.Col(html.H3('Identifying which tracts gentrified from 2006 - 2016')),
@@ -190,6 +206,13 @@ layout = html.Div([
     [Input("b_census_year", "value")]
 )
 def display_density_choropleth(census_year):
+    if census_year == 2006:
+        census_year = 'p_black2006'
+    elif census_year == 2011:
+        census_year = 'p_black2011'
+    else:
+        census_year = 'p_black2016'
+
     density_figure = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -200,6 +223,7 @@ def display_density_choropleth(census_year):
         zoom=11,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[0, 30]
     )
 
     return density_figure
@@ -211,6 +235,13 @@ def display_density_choropleth(census_year):
     [Input("i_census_year", "value")]
 )
 def display_density_choropleth(census_year):
+    if census_year == 2006:
+        census_year = 'p_indig2006'
+    elif census_year == 2011:
+        census_year = 'p_indig2011'
+    else:
+        census_year = 'p_indig2016'
+
     density_figure = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -221,6 +252,7 @@ def display_density_choropleth(census_year):
         zoom=11,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[0, 10]
     )
 
     return density_figure
@@ -232,6 +264,13 @@ def display_density_choropleth(census_year):
     [Input("p_census_year", "value")]
 )
 def display_density_choropleth(census_year):
+    if census_year == 2006:
+        census_year = 'p_poc2006'
+    elif census_year == 2011:
+        census_year = 'p_poc2011'
+    else:
+        census_year = 'p_poc2016'
+
     density_figure = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -242,6 +281,7 @@ def display_density_choropleth(census_year):
         zoom=11,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[0, 40]
     )
 
     return density_figure
