@@ -127,6 +127,8 @@ layout = html.Div([
             html.Img(src=app.get_asset_url('correlations_with_average_value.png'), style={'height': '50vh', 'width': '50vh'})
         ]),
 
+        html.Br(),
+
         dbc.Row([
             dbc.Col([
                 html.P("The above diagram shows the correlation between each type of dwelling and the average dwelling value of a census tract. "
@@ -153,6 +155,8 @@ layout = html.Div([
         dbc.Row([
             dbc.Col(dbc.Card(html.Embed(src=app.get_asset_url('housing_report.html'), style={'height': '90vh'})))
         ]),
+
+        html.Br(),
 
         dbc.Row([
             dbc.Col([
