@@ -53,6 +53,15 @@ layout = html.Div([
             },
         ),
 
+        html.Br(),
+
+        dbc.Row([
+            dbc.Col([
+                html.P(
+                    "The above visualization shows the average home value of each tract.")
+            ])
+        ]),
+
         # Section 2: Rent prices
         dbc.Row([
             dbc.Col(dbc.Card(html.H3(children='Rent prices',
@@ -74,6 +83,15 @@ layout = html.Div([
                 2016: {'label': '2016', 'style': {'font-size': '150%'}},
             },
         ),
+
+        html.Br(),
+
+        dbc.Row([
+            dbc.Col([
+                html.P(
+                    "The above visualization shows the average monthly rent of each tract.")
+            ])
+        ]),
 
         #Section 3 dwelling types
         dbc.Row([
@@ -97,9 +115,11 @@ layout = html.Div([
             },
         ),
 
+        html.Br(),
+
         dbc.Row([
             dbc.Col([
-                html.P("The above bar chart shows the number of each type of dwelling in Metro Halifax for each census.")
+                html.P("The above bar chart shows the number of each type of dwelling in Metro Halifax.")
             ])
         ], style={'marginBottom': 50}),
 

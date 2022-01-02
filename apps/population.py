@@ -272,7 +272,7 @@ layout = html.Div([
             dbc.Col([
                 html.P("The above bar graph shows the percentage growth of each individual age group from one census to the next for all of Metro Halifax. "
                        "For example, growth of the youngest age group is measured by comparing the population of 15-19 year olds in 2006, to the population of 20-24 year olds in 2011. "
-                       "This is the population growth of people born in a specific range of years ageing five years from one census to the next. "
+                       "This is the population growth of people born in a specific range of years. "
                        "This measurement of population growth identifies when people are most likely to move to Halifax, and move away. "
                        "As we can see from the graph, the population of 15-19 year olds more than doubles by the time they are in the 20-24 year old age group. "
                        "This is the only age demographic that saw significant growth from 2006-2016. "
