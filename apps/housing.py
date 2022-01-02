@@ -38,20 +38,20 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for housing choropleth
-        html.P("Census Year:"),
-        dcc.Dropdown(
-            id='housing_year',
-            options=[
-                {'label': '2006', 'value': 'HomePrices2006'},
-                {'label': '2011', 'value': 'HomePrices2011'},
-                {'label': '2016', 'value': 'HomePrices2016'}
-            ],
-            value='HomePrices2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="housing_choropleth", style={'width': '90vh', 'height': '60vh'}),
+
+        dcc.Slider(
+            id = 'housing_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         # Section 2: Rent prices
         dbc.Row([
@@ -60,20 +60,20 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for housing choropleth
-        html.P("Census Year:"),
-        dcc.Dropdown(
-            id='rent_year',
-            options=[
-                {'label': '2006', 'value': 'RentPrices2006'},
-                {'label': '2011', 'value': 'RentPrices2011'},
-                {'label': '2016', 'value': 'RentPrices2016'}
-            ],
-            value='RentPrices2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="rent_choropleth", style={'width': '90vh', 'height': '60vh'}),
+
+        dcc.Slider(
+            id = 'rent_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         #Section 3 dwelling types
         dbc.Row([
@@ -82,23 +82,24 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        # Dropdown menu for dwelling barchart
-        dcc.Dropdown(
-            id='dwelling_year',
-            options=[
-                {'label': '2006', 'value': 'sums_2006'},
-                {'label': '2011', 'value': 'sums_2011'},
-                {'label': '2016', 'value': 'sums_2016'}
-            ],
-            value='sums_2006',
-            style={'width': '50%', 'margin-left': '5px'}
-        ),
-
         dcc.Graph(id="dwelling_barchart", style={'width': '90vh', 'height': '60vh'}),
+
+        dcc.Slider(
+            id = 'dwelling_year',
+            min = 2006,
+            max = 2016,
+            step = 5,
+            value = 2006,
+            marks = {
+                2006: {'label': '2006', 'style': {'font-size': '150%'}},
+                2011: {'label': '2011', 'style': {'font-size': '150%'}},
+                2016: {'label': '2016', 'style': {'font-size': '150%'}},
+            },
+        ),
 
         dbc.Row([
             dbc.Col([
-                html.P("The above bar chart shows the number of each type of dwelling in Halifax for each census.")
+                html.P("The above bar chart shows the number of each type of dwelling in Metro Halifax for each census.")
             ])
         ], style={'marginBottom': 50}),
 
@@ -176,6 +177,13 @@ layout = html.Div([
     [Input("housing_year", "value")]
 )
 def display_housing_choropleth(housing_year):
+    if housing_year == 2006:
+        housing_year = 'HomePrices2006'
+    elif housing_year == 2011:
+        housing_year = 'HomePrices2011'
+    else:
+        housing_year = 'HomePrices2016'
+
     housing_figure = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -186,6 +194,7 @@ def display_housing_choropleth(housing_year):
         zoom=11,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[100000, 1000000]
     )
 
     return housing_figure
@@ -197,6 +206,13 @@ def display_housing_choropleth(housing_year):
     [Input("rent_year", "value")]
 )
 def display_rent_choropleth(rent_year):
+    if rent_year == 2006:
+        rent_year = 'RentPrices2006'
+    elif rent_year == 2011:
+        rent_year = 'RentPrices2011'
+    else:
+        rent_year = 'RentPrices2016'
+
     rent_figure = px.choropleth_mapbox(
         data_frame=hfx_census,
         geojson=hfx_json,
@@ -207,6 +223,7 @@ def display_rent_choropleth(rent_year):
         zoom=11,
         opacity=0.4,
         mapbox_style="carto-positron",
+        range_color=[450, 1500]
     )
 
     return rent_figure
@@ -217,6 +234,13 @@ def display_rent_choropleth(rent_year):
     [Input("dwelling_year", "value")]
 )
 def display_dwelling_barchart(dwelling_year):
+    if dwelling_year == 2006:
+        dwelling_year = 'sums_2006'
+    elif dwelling_year == 2011:
+        dwelling_year = 'sums_2011'
+    else:
+        dwelling_year = 'sums_2016'
+
     dwelling_barchart = px.bar(
         housing_data,
         x='dwellings',
