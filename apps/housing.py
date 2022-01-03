@@ -38,7 +38,7 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        dcc.Graph(id="housing_choropleth", style={'width': '90vh', 'height': '60vh'}),
+        dcc.Graph(id="housing_choropleth", style={'width': '90vh', 'height': '60vh'}, className='text-center'),
 
         dcc.Slider(
             id = 'housing_year',
@@ -69,7 +69,7 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        dcc.Graph(id="rent_choropleth", style={'width': '90vh', 'height': '60vh'}),
+        dcc.Graph(id="rent_choropleth", style={'width': '90vh', 'height': '60vh'}, className='text-center'),
 
         dcc.Slider(
             id = 'rent_year',
@@ -100,7 +100,9 @@ layout = html.Div([
                     , className='mb-4')
         ]),
 
-        dcc.Graph(id="dwelling_barchart", style={'width': '90vh', 'height': '60vh'}),
+        dbc.Row([
+            dcc.Graph(id="dwelling_barchart", style={'width': '90vh', 'height': '60vh'}),
+        ], style={'marginBottom': 25, "display": "inline-block"}),
 
         dcc.Slider(
             id = 'dwelling_year',
