@@ -146,7 +146,6 @@ layout = html.Div([
         ]),
         
         dbc.Row([
-
             dbc.Col(dbc.Card(html.H3(children='Pandas Profiling for Exploratory Data Analysis (EDA)',
                                      className='text-center text-light bg-dark'), body=True, color="dark")
                     , className='mb-4')
@@ -173,11 +172,16 @@ layout = html.Div([
         ]),
 
         dbc.Row([
-            html.P("Model Goodness-of-Fit with only training data from 2006 - 2011"),
-            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithOnly2011Data.png'), style={'height': '70vh', 'width': '130vh'})),
-            html.P("Model Goodness-of-Fit when half of the 2016 data was included in the training data"),
-            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithHalf2016Data.png'))),
-        ], style={'marginBottom': 50}),
+            html.H5("Model Goodness-of-Fit with only training data from 2006 - 2011"),
+            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithOnly2011Data.png'), style={'height': '60vh', 'width': '130vh', 'margin-bottom': 25}))
+        ], style={'marginBottom': 25}),
+
+        html.Br(),
+
+        dbc.Row([
+            html.H5("Model Goodness-of-Fit when half of the 2016 data was included in the training data"),
+            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithHalf2016Data.png'), style={'height': '60vh', 'width': '130vh', 'margin-bottom': 25}))
+        ], style={'marginBottom': 25}),
 
         dbc.Row([
             html.P("To create a regression capable of predicting the average housing cost of a tract based on historical"
