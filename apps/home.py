@@ -48,7 +48,7 @@ layout = html.Div([
                 html.P("8) Based on the previous analysis, make three recommendations for how to improve housing "
                        "conditions in Halifax.")
             ])
-        ]),
+        ], style={'marginBottom': 25}),
 
         dbc.Row([
             dbc.Row([
@@ -76,9 +76,7 @@ layout = html.Div([
                        "some "
                        "minor considerations needed for missing data addressed in the next section."),
             ], style={'marginBottom': 25}),
-            dbc.Row([
-                dbc.Col(html.H3('                                                                           ')) #spacing
-            ]),
+
             dbc.Row([
                 dbc.Col(dbc.Card(children=[html.H2(children='SHAPEFILES',
                                                    className='text-center'),
@@ -111,10 +109,12 @@ layout = html.Div([
                                  body=True, color='dark', style={'padding': '3px'}, className='text-center', outline=True)
                         , width=4, className='mb-4')
             ]),
-        ]),
+        ], style={'marginBottom': 25}),
+
         dbc.Row([
                 dbc.Col(html.H2("DATA PREPARATION"), className="mb-5 mt-5"),
             ]),
+
         dbc.Row([
             html.P("Shapefiles were obtained from the Statistics Canada 2016 Census Boundary Files page in ArcGIS ("
                    ".shp) "
@@ -129,6 +129,6 @@ layout = html.Div([
             html.P("In the National Household Survey data for 2011, certain tracts had some of their data attributes"
                    " suppressed such as educational attainment information, so any affected rows lacking information "
                    "(i.e containing NaN values) were dropped during analysis."),
-        ])
+        ], style={'marginBottom': 25})
     ])
-], style={'marginBottom': 100})
+], style={'marginBottom': 50, 'fontSize': 18})

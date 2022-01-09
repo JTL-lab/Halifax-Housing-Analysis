@@ -90,4 +90,4 @@ layout = html.Div([
         ])
     ], className='text-center', style={'marginBottom': 50}),
 
-])
+], style={'fontSize': 18})

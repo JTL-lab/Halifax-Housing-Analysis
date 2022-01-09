@@ -165,13 +165,11 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P("The above visualization shows the population per square kilometre in each tract.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         # Section 2: Population Change
         dbc.Row([
@@ -195,13 +193,11 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P("The above visualization shows the population growth of each tract since the last census as a percentage.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         # Section 3: Population Growth and Shrinkage Without Childbirths
         dbc.Row([
@@ -226,8 +222,6 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P("The above visualization shows the percentage of population growth that each tract would have experienced " 
@@ -241,10 +235,9 @@ layout = html.Div([
                        "are likely not sustainable for the long term future as Halifax still depends on child birth for a small boost "
                        "to keep the population growing.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         # section 4 population trends of age groups
-
         dbc.Row([
             dbc.Col(dbc.Card(html.H3(children='Population Trends of Age Groups',
                                      className='text-center text-light bg-dark'), body=True, color="dark")
@@ -266,8 +259,6 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P("The above bar graph shows the percentage growth of each individual age group from one census to the next for all of Metro Halifax. "
@@ -280,7 +271,7 @@ layout = html.Div([
                        "institutions. The reason behind the lack of growth in every other age demographic is less obvious. "
                        "However, it is clear that more work needs to be done to keep and attract more people outside of the typical post-secondary age group.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         dbc.Row([
             dbc.Row([
@@ -292,7 +283,7 @@ layout = html.Div([
             ])
         ])
     ])
-])
+], style={'marginBottom': 50, 'fontSize': 18})
 
 
 # Gets user input from dropdown to choose year for population density visualization

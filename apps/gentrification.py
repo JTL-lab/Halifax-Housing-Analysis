@@ -66,9 +66,10 @@ layout = html.Div([
                        "information, we can observe which tracts gentrified by 2016 and observe whether gentrification "
                        "in Halifax appears to be affecting neighborhoods with higher minority populations.")
             ], style={'marginBottom': 50}),
+
             dbc.Row([
                 dbc.Col(html.H3('Visualizing minority populations across Halifax from 2006 - 2016')),
-            ], style={'marginBottom': 50}, className='text-center'),
+            ], style={'marginBottom': 25}, className='text-center'),
 
         ]),
 
@@ -95,13 +96,11 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P("The above visualization shows the percentage of residents in each tract who identify as black.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         # Section 2: Indigenous population visualization for 2006, 2011, and 2016
         dbc.Row([
@@ -126,14 +125,12 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P(
                     "The above visualization shows the percentage of residents in each tract who identify as indigenous.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         # Section 3: Minority population visualization for 2006, 2011, and 2016
         dbc.Row([
@@ -166,10 +163,12 @@ layout = html.Div([
                     "The above visualization shows the percentage of residents in each tract who identify as a person of colour. "
                     "In this case, a person of colour is any person who does not identify as caucasian.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         dbc.Row([
-            dbc.Col(html.H3('Identifying which tracts gentrified from 2006 - 2016')),
+            dbc.Col(dbc.Card(html.H3(children='Identifying which tracts gentrified from 2006 - 2016',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
         ], style={'marginBottom': 50, 'marginTop': 50}, className='text-center'),
 
         dbc.Row([
@@ -202,13 +201,15 @@ layout = html.Div([
                        "higher "
                        " percentage of POC residents.")
             ])
-        ]),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         dbc.Row([
+
             dbc.Row([
                 dbc.Col(html.H5("REFERENCES"), className="mb-5 mt-5")
 
             ]),
+
             dbc.Row([
                 html.P("[1] National Geographic Society, “Gentrification,” National Geographic Society, 9 Sep 2019. "
                        "[Online]. Available: https://www.nationalgeographic.org/encyclopedia/gentrification/."),
@@ -224,7 +225,7 @@ layout = html.Div([
             ])
         ])
     ])
-], style={'marginBottom': 100})
+], style={'marginBottom': 50, 'fontSize': 18})
 
 
 # Gets user input from dropdown to choose year for black population visualization

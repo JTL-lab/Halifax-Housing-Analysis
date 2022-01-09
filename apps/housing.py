@@ -53,14 +53,12 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P(
                     "The above visualization shows the average home value of each tract.")
             ])
-        ], style={'marginBottom': 25}),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
         # Section 2: Rent prices
         dbc.Row([
@@ -84,16 +82,14 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P(
                     "The above visualization shows the average monthly rent of each tract.")
             ])
-        ], style={'marginBottom': 25}),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
 
-        #Section 3 dwelling types
+        #Section 3: dwelling types
         dbc.Row([
             dbc.Col(dbc.Card(html.H3(children='Dwelling Types',
                                      className='text-center text-light bg-dark'), body=True, color="dark")
@@ -117,19 +113,23 @@ layout = html.Div([
             },
         ),
 
-        html.Br(),
-
         dbc.Row([
             dbc.Col([
                 html.P("The above bar chart shows the number of each type of dwelling in Metro Halifax.")
             ])
-        ], style={'marginBottom': 25}),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
+
+        # Section 4: Dwelling type correlation with tract dwelling prices
+
+        dbc.Row([
+            dbc.Col(dbc.Card(html.H3(children='Dwelling types and their correlation with average tract prices',
+                                     className='text-center text-light bg-dark'), body=True, color="dark")
+                    , className='mb-4')
+        ]),
 
         dbc.Row([
             html.Img(src=app.get_asset_url('correlations_with_average_value.png'), style={'height': '50vh', 'width': '50vh'})
         ]),
-
-        html.Br(),
 
         dbc.Row([
             dbc.Col([
@@ -145,7 +145,7 @@ layout = html.Div([
                        "although a large number of dwellings can. There is a strong positive correlation between median household income "
                        "and average dwelling value. Generally, wealthier people can afford more valuable homes.")
             ])
-        ], style={'margin-bottom': 25}),
+        ], style={'margin-bottom': 25, 'margin-top': 50}),
         
         dbc.Row([
             dbc.Col(dbc.Card(html.H3(children='Pandas Profiling for Exploratory Data Analysis (EDA)',
@@ -164,7 +164,7 @@ layout = html.Div([
                 html.P("The above shows the exploratory data analysis that was used to better understand the housing "
                        "trends in Metro Halifax.")
             ])
-        ], style={'marginBottom': 25}),
+        ], style={'marginBottom': 25, 'margin-top': 50}),
         
          # Section 4: Housing Price Regressor
         dbc.Row([
@@ -196,9 +196,9 @@ layout = html.Div([
                    "was not an issue. We also attempted retraining each of the models with an added random 50% of the "
                    "2016 data, and used the remaining 2016 data as the test set. This improved model performance for "
                    "most of the models.")
-        ], style={'marginBottom': 50})
+        ], style={'marginBottom': 50, 'margin-top': 50})
     ]),
-])
+], style={'fontSize': 18})
 
 
 # Gets user input from dropdown to choose year for housing visualization
