@@ -60,7 +60,7 @@ layout = html.Div([
                 html.P(
                     "The above visualization shows the average home value of each tract.")
             ])
-        ]),
+        ], style={'marginBottom': 25}),
 
         # Section 2: Rent prices
         dbc.Row([
@@ -91,7 +91,7 @@ layout = html.Div([
                 html.P(
                     "The above visualization shows the average monthly rent of each tract.")
             ])
-        ]),
+        ], style={'marginBottom': 25}),
 
         #Section 3 dwelling types
         dbc.Row([
@@ -123,7 +123,7 @@ layout = html.Div([
             dbc.Col([
                 html.P("The above bar chart shows the number of each type of dwelling in Metro Halifax.")
             ])
-        ], style={'marginBottom': 50}),
+        ], style={'marginBottom': 25}),
 
         dbc.Row([
             html.Img(src=app.get_asset_url('correlations_with_average_value.png'), style={'height': '50vh', 'width': '50vh'})
@@ -164,7 +164,7 @@ layout = html.Div([
                 html.P("The above shows the exploratory data analysis that was used to better understand the housing "
                        "trends in Metro Halifax.")
             ])
-        ]),
+        ], style={'marginBottom': 25}),
         
          # Section 4: Housing Price Regressor
         dbc.Row([
