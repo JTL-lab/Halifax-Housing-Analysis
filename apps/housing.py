@@ -175,14 +175,14 @@ layout = html.Div([
 
         dbc.Row([
             html.H5("Model Goodness-of-Fit with only training data from 2006 - 2011"),
-            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithOnly2011Data.png'), style={'height': '30vh', 'width': '65vh', 'margin-bottom': 25}))
+            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithOnly2011Data.png'), style={'height': '45vh', 'width': '97.5vh', 'margin-bottom': 25}))
         ], style={'marginBottom': 25}),
 
         html.Br(),
 
         dbc.Row([
             html.H5("Model Goodness-of-Fit when half of the 2016 data was included in the training data"),
-            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithHalf2016Data.png'), style={'height': '30vh', 'width': '65vh', 'margin-bottom': 25}))
+            dbc.Col(html.Img(src=app.get_asset_url('ModelsWithHalf2016Data.png'), style={'height': '45vh', 'width': '97.5vh', 'margin-bottom': 25}))
         ], style={'marginBottom': 25}),
 
         dbc.Row([

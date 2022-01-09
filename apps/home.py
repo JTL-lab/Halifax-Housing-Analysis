@@ -75,7 +75,7 @@ layout = html.Div([
                        "Canadian federal government, data was for the most part high-quality and clean. There were "
                        "some "
                        "minor considerations needed for missing data addressed in the next section."),
-            ]),
+            ], style={'marginBottom': 25}),
             dbc.Row([
                 dbc.Col(html.H3('                                                                           ')) #spacing
             ]),
