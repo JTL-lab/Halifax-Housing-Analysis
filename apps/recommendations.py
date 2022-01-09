@@ -39,9 +39,10 @@ layout = html.Div([
                            "neighbourhoods are only zoned for conventional single family homes. So in addition to the construction "
                            "of more middle housing, zoning regulations must first be changed to allow for the construction to "
                            "legally take place."),
-                    html.Img(src=app.get_asset_url('MiddleHousingFig1.png'), className='text-center'),
-                ],
-                title="Recommendation #1: Increase 'Middle Housing' Options in Halifax",
+                    dbc.Row([
+                        html.Img(src=app.get_asset_url('MiddleHousingFig1.png')),
+                    ], style={'textAlign': 'center'}),
+                ], title="Recommendation #1: Increase 'Middle Housing' Options in Halifax",
             ),
             dbc.AccordionItem(
                 [
@@ -64,8 +65,8 @@ layout = html.Div([
             dbc.AccordionItem(
                 [
                     html.P("Controlling the prices of rent in Halifax and ensuring that they do not increase "
-                           "past a certain percentage each year can lead to greater housing stability in Halifax. "
-                           "As mentioned, it was found that rent prices increased quite drastically over the "
+                           "past a certain percentage each year can lead to greater housing stability in Halifax. "),
+                    html.P("As mentioned, it was found that rent prices increased quite drastically over the "
                            "course of our analysis. By ensuring that rent prices remain stable over a certain "
                            "period of time, tenants can stay in their units longer which can lead to a greater "
                            "sense of community and stability [3]. Along with neighbourhood diversity and economic "
@@ -87,6 +88,6 @@ layout = html.Div([
             html.P('[2] National Low Income Housing Coalition. "Why do affordable homes matter?". 2021.'),
             html.P('[3] Centre for Equality Rights in Accommodation. "A look at rent control policies across Canada". 2021.'),
         ])
-    ], className='text-center'),
+    ], className='text-center', style={'marginBottom': 50}),
 
 ])
