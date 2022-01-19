@@ -4,6 +4,7 @@ from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 
 from app import app
+from app import server
 from apps import home, population, gentrification, housing, recommendations
 
 # Navigation bar!
