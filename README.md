@@ -1,5 +1,8 @@
 # Halifax-Housing-Analysis
 
+### Deployment
+This project can be viewed at www.halifaxhousinganalysis.tech.
+
 ### Project Description 
 This project will tackle the analysis of housing prices and gentrification trends for the city of Halifax, NS, with the goal of ultimately making suggestions on how to resolve certain housing crisis issues that have arisen within recent years. This should be done with careful consideration of demographic trends and would ideally prioritize disproportionately affected groups of individuals. To accomplish this, we intend to analyze housing and rental cost trends for areas of Halifax while considering changes through the lens of gentrifications and its varying social impact on various citizens (notably minority and low-income communities). Property taxes for Halifax housing will likely be relevant to this analysis as well. Much of the project focus will involve creating effective visualizations that showcase these trends, and any models that may be applied will prioritize interpretability wherever possible. 
  
